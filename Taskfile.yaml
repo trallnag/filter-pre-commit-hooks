@@ -1,0 +1,103 @@
+version: "3"
+
+set:
+  - errexit
+  - nounset
+  - pipefail
+
+dotenv:
+  - .env
+
+tasks:
+  desc: Init, format, and lint.
+  default:
+    cmds:
+      - task: init
+      - task: format
+      - task: lint
+      - task: test
+
+  init:
+    desc: Initialize environment.
+    cmds:
+      - task: init-precommit
+      - task: init-uv
+
+  init-precommit:
+    desc: Initialize pre-commit.
+    cmds:
+      - pre-commit install --install-hooks
+      - pre-commit install --install-hooks --hook-type commit-msg
+      - pre-commit install --install-hooks --hook-type post-checkout
+      - pre-commit install --install-hooks --hook-type post-merge
+
+  init-uv:
+    desc: Initialize uv.
+    cmds:
+      - uv sync --locked --all-extras --dev
+
+  update:
+    desc: Update dependencies.
+    cmds:
+      - task: update-precommit
+      - task: update-uv
+
+  update-precommit:
+    desc: Update dependencies managed with pre-commit.
+    cmds:
+      - pre-commit autoupdate
+
+  update-uv:
+    desc: Update dependencies managed with uv.
+    cmds:
+      - uv sync --upgrade --all-extras --dev
+
+  format:
+    desc: Run formatters.
+    cmds:
+      - task: format-precommit
+      - task: format-ruff
+
+  format-precommit:
+    desc: Run pre-commit hooks that format.
+    cmds:
+      - >-
+        export SKIP="$(python src/filter_pre_commit_hooks.py --mode=tag format)"
+        && (pre-commit run --all-files || pre-commit run --all-files)
+        | grep --perl-regexp --invert-match --regexp='\.\e.+Skipped'
+
+  format-ruff:
+    desc: Run Ruff formatter and checker (fix).
+    cmds:
+      - uv run ruff format
+      - uv run ruff check --fix-only --unsafe-fixes
+
+  lint:
+    desc: Run linters.
+    cmds:
+      - task: lint-precommit
+      - task: lint-ruff
+      - task: lint-mypy
+
+  lint-precommit:
+    desc: Run pre-commit hooks that lint.
+    cmds:
+      - >-
+        export SKIP="$(python src/filter_pre_commit_hooks.py --mode=tag lint)"
+        && pre-commit run --all-files
+        | grep --perl-regexp --invert-match --regexp='\.\e.+Skipped'
+
+  lint-ruff:
+    desc: Run Ruff checker (nofix).
+    cmds:
+      - uv run ruff check --no-fix
+
+  lint-mypy:
+    desc: Run mypy.
+    cmds:
+      - uv run dmypy run --timeout 3600 src tests
+
+  test:
+    desc: Run tests.
+    cmds:
+      - uv run pytest

@@ -1,0 +1,144 @@
+name: CI
+
+#
+# Primary workflow for continues integration.
+#
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [master, dev]
+  schedule:
+    # At 04:04 on Monday.
+    - cron: 4 4 * * 1
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  format-lint:
+    name: Format & Lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      UV_PYTHON_PREFERENCE: only-system
+      UV_PYTHON_DOWNLOADS: never
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: pyproject.toml
+
+      - name: Set up pre-commit
+        run: uv tool install pre-commit
+
+      - name: Cache pre-Commit cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: |
+            pre-commit cache dir ${{ hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: |
+            pre-commit cache dir
+
+      - name: Run task init-uv
+        run: task init-uv
+
+      - name: Run task format-precommit
+        run: task format-precommit
+
+      - name: Run task lint-precommit
+        run: task lint-precommit
+
+      - name: Commit and push changes
+        if: |
+          cancelled() == false &&
+          github.actor != 'dependabot[bot]' &&
+          github.ref_type != 'tag' &&
+          startsWith(github.ref, 'refs/head/renovate/') == false
+        id: auto-commit-action
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "ci: Apply automatic improvements"
+          commit_options: --no-verify --signoff
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      UV_PYTHON_PREFERENCE: only-system
+      UV_PYTHON_DOWNLOADS: never
+    strategy:
+      matrix:
+        python-version:
+          - min
+          - max
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Determine python-version
+        id: python-version
+        run: |
+          set -euo pipefail
+
+          if [[ ${{ matrix.python-version }} == min ]]; then
+            python_version=$(
+              grep -G '^requires-python' pyproject.toml |
+                grep -E -o '[0-9]+\.[0-9]+'
+            )
+          else
+            python_version=$(
+              grep -G '^requires-python' pyproject.toml |
+                grep -E -o '[0-9]+\.'
+            )x
+          fi
+
+          echo "value=$python_version" | tee -a $GITHUB_OUTPUT
+
+      - name: Set up Task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ steps.python-version.outputs.value }}
+
+      - name: Run task init-uv
+        run: task init-uv
+
+      - name: Run task test
+        run: task test
+
+  keep-enabled:
+    name: Keep Enabled
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Keep workflow enabled
+        uses: gautamkrishnar/keepalive-workflow@v2

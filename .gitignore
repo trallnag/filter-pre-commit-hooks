@@ -1,0 +1,13 @@
+.venv/
+.vscode/
+tmp/
+
+# Mypy.
+.dmypy.json
+.mypy_cache/
+
+# Pytest.
+.pytest_cache/
+
+# Ruff.
+.ruff_cache/
