@@ -5,7 +5,7 @@ maintenance tasks and processes.
 
 ## Raise lowest supported Python version
 
-Check here: <https://devguide.python.org/versions/>
+Check here: <https://devguide.python.org/versions/>.
 
 Consider raising the lowest supported Python version. Adjustments must be made
 in the following files:
