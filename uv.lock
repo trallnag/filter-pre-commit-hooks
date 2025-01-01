@@ -21,7 +21,7 @@ wheels = [
 
 [[package]]
 name = "filter-pre-commit-hooks"
-version = "0.1.0"
+version = "1.0.0"
 source = { virtual = "." }
 
 [package.dev-dependencies]

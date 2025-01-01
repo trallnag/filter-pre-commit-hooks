@@ -18,6 +18,7 @@ Bump the version constants in [`pyproject.toml`](pyproject.toml) and
 ```sh
 sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
 sed -i "s/^VERSION = \".*\"/VERSION = \"$VERSION\"/" src/filter_pre_commit_hooks.py
+uv sync
 ```
 
 Now make sure that [`CHANGELOG.md`](CHANGELOG.md) is up-to-date.
@@ -34,7 +35,7 @@ release to a new section with an appropriate title for the release. Should the
 Commit the changes. Make sure to sign the commit:
 
 ```sh
-git add CHANGELOG.md
+git add .
 git commit -S -m "chore: Prepare release v$VERSION"
 git log --show-signature -1
 ```
