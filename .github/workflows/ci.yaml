@@ -28,7 +28,7 @@ jobs:
       UV_PYTHON_PREFERENCE: only-system
       UV_PYTHON_DOWNLOADS: never
     steps:
-      - name: Checkout repository
+      - name: Check out repository
         uses: actions/checkout@v4
 
       - name: Set up Task
@@ -138,7 +138,7 @@ jobs:
     permissions:
       actions: write
     steps:
-      - name: Checkout repository
+      - name: Check out repository
         uses: actions/checkout@v4
 
       - name: Keep workflow enabled
