@@ -8,6 +8,9 @@ set:
 vars:
   script_name: filter_pre_commit_hooks.py
 
+dotenv:
+  - .env
+
 tasks:
   desc: Init, format, and lint.
   default:
