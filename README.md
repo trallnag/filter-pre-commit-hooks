@@ -22,7 +22,7 @@ pre-commit run --all-files
 
 The hook identifiers are extracted from the config using the following regex:
 
-```re
+```text
 ^ *(?:- )?id: [\'\"]?(?P<hook>[a-z0-9-]+)[\'\"]?(?: +#.*)?$
 ```
 
@@ -50,7 +50,7 @@ repos:
 The hook identifiers are extracted from the config using the following regex,
 where `<tags>` is replaced by the given tags:
 
-```re
+```text
 ^ *(?:- )?id: [\'\"]?(?P<hook>[a-z0-9-]+)[\'\"]?.*#.*
 [Tt]ags ?[:=] ?[0-9a-z, ]*\b(<tags>)\b[0-9a-z, ]*\..*$
 ```
