@@ -5,9 +5,6 @@ set:
   - nounset
   - pipefail
 
-dotenv:
-  - .env
-
 tasks:
   desc: Init, format, and lint.
   default:
