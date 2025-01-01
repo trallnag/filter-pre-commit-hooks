@@ -5,9 +5,6 @@ set:
   - nounset
   - pipefail
 
-vars:
-  script_name: filter_pre_commit_hooks.py
-
 dotenv:
   - .env
 
@@ -65,7 +62,7 @@ tasks:
     desc: Run pre-commit hooks that format.
     cmds:
       - >-
-        export SKIP="$(python src/{{.script_name}} --mode=tag format)"
+        export SKIP="$(python src/$SCRIPT_NAME.py --mode=tag format)"
         && (pre-commit run --all-files || pre-commit run --all-files)
         | grep --perl-regexp --invert-match --regexp='\.\e.+Skipped'
 
@@ -86,7 +83,7 @@ tasks:
     desc: Run pre-commit hooks that lint.
     cmds:
       - >-
-        export SKIP="$(python src/{{.script_name}} --mode=tag lint)"
+        export SKIP="$(python src/$SCRIPT_NAME.py --mode=tag lint)"
         && pre-commit run --all-files
         | grep --perl-regexp --invert-match --regexp='\.\e.+Skipped'
 
