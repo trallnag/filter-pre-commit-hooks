@@ -1,0 +1,5 @@
+_commit: v1
+_src_path: git@github.com:trallnag/copier-template-python-script.git
+project_name: filter-pre-commit-hooks
+repo_name: filter-pre-commit-hooks
+script_name: filter_pre_commit_hooks
