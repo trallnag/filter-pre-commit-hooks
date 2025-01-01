@@ -12,9 +12,18 @@ Pick a name for the new release. It must follow
 VERSION=1.0.1
 ```
 
-Make sure that the "Unreleased" section in the [changelog](CHANGELOG.md) is
-up-to-date. Feel free to adjust entries for example by adding additional
-examples or highlighting breaking changes.
+Bump the version constants in [`pyproject.toml`](pyproject.toml) and
+[`src/filter_pre_commit_hooks.py`](src/filter_pre_commit_hooks.py):
+
+```sh
+sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
+sed -i "s/^VERSION = \".*\"/VERSION = \"$VERSION\"/" src/filter_pre_commit_hooks.py
+```
+
+Now make sure that [`CHANGELOG.md`](CHANGELOG.md) is up-to-date.
+
+Adjust entries in the changelog for example by adding additional examples or
+highlighting breaking changes.
 
 Move the content of the "Unreleased" section that will be included in the new
 release to a new section with an appropriate title for the release. Should the
@@ -63,7 +72,7 @@ This triggers the release workflow which will build binaries, build and push
 container images, and draft a GitHub release. Monitor the
 [release workflow run](https://github.com/trallnag/filter-pre-commit-hooks/actions/workflows/release.yaml).
 
-## Wrap Up
+## Wrap up
 
 Go to the release page of this project on GitHub
 [here](https://github.com/trallnag/filter-pre-commit-hooks/releases) and review
