@@ -11,3 +11,6 @@ tmp/
 
 # Ruff.
 .ruff_cache/
+
+# Python.
+*.pyc
