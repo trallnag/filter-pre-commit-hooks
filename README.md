@@ -71,3 +71,9 @@ This work is licensed under the
 
 The license is also included in the script
 [`src/filter_pre_commit_hooks.py`](src/filter_pre_commit_hooks.py) itself.
+
+## Template
+
+This project is based on the following
+[Copier](https://copier.readthedocs.io/en/stable/) template:
+<https://github.com/trallnag/copier-template-python-script>.
