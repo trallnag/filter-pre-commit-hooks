@@ -16,6 +16,15 @@ def run_with(*args: str) -> subprocess.CompletedProcess[str]:
     )
 
 
+def test_get_version() -> None:
+    """
+    Tests that the script returns a version.
+    """
+
+    result = run_with("--version")
+    assert result.returncode == 0
+
+
 def test_unknown_fail_default() -> None:
     """
     Tests that the script by default fails when an unknown hook is specified to
