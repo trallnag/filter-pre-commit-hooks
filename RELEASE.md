@@ -1,7 +1,6 @@
 # Release!
 
-This document is targeted at project maintainers. It describes the process to
-release a new version.
+This document describes the release process and is targeted at maintainers.
 
 ## Preparation
 
