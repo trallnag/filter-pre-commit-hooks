@@ -40,6 +40,13 @@ parser = ArgumentParser(
 )
 
 parser.add_argument(
+    "-v",
+    "--version",
+    action="version",
+    version=f"%(prog)s {VERSION}",
+)
+
+parser.add_argument(
     "--config",
     type=Path,
     default=".pre-commit-config.yaml",
