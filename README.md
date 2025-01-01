@@ -1,6 +1,6 @@
-# Gist `filter_pre_commit_hooks.py`
+# `filter_pre_commit_hooks.py`
 
-Gist of a small Python script that extracts and filters
+Small Python script that extracts and filters
 [pre-commit](https://pre-commit.com/) hooks so that only a subset can be run.
 Why is such a script helpful? Pre-commit does not provide a way to run a
 selection of hooks. It is only possible to skip hooks.
