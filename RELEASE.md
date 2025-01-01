@@ -4,6 +4,12 @@ This document describes the release process and is targeted at maintainers.
 
 ## Preparation
 
+Check the existing tags:
+
+```sh
+git tag
+```
+
 Pick a name for the new release. It must follow
 [Semantic Versioning](https://semver.org):
 
