@@ -24,6 +24,8 @@ import re
 from argparse import ArgumentParser, BooleanOptionalAction
 from pathlib import Path
 
+VERSION = "0.1.0"
+
 parser = ArgumentParser(
     description=(
         "Gets a comma-separated list of all pre-commit hooks except the ones "
