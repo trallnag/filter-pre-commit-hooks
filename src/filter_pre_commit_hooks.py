@@ -78,7 +78,7 @@ parser.add_argument(
 parser.add_argument(
     "filters",
     type=str,
-    nargs="*",
+    nargs="+",
     help=(
         "What to filter out, i.e. what should not show up in the resulting "
         "list. In the `id` mode, these are the hook identifiers themselves to "
@@ -94,9 +94,6 @@ if __name__ == "__main__":
     fail_unknown: bool = args.fail_unknown
     mode: Literal["id", "tag"] = args.mode
     filters: list[str] = args.filters
-
-    if not filters:
-        parser.error("No filters provided.")
 
     with open(args.config) as pre_commit_config:
         pre_commit_config_content: str = pre_commit_config.read()

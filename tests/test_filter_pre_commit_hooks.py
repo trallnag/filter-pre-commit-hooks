@@ -32,7 +32,7 @@ def test_filter_empty() -> None:
 
     result = run_with()
     assert result.returncode != 0
-    assert "No filters provided." in result.stderr
+    assert "the following arguments are required: filters" in result.stderr
 
 
 def test_unknown_fail_default() -> None:
