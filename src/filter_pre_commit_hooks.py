@@ -23,6 +23,7 @@
 import re
 from argparse import ArgumentParser, BooleanOptionalAction
 from pathlib import Path
+from typing import Literal
 
 VERSION = "1.0.0"
 
@@ -88,6 +89,14 @@ parser.add_argument(
 
 if __name__ == "__main__":
     args = parser.parse_args()
+
+    config: Path = args.config
+    fail_unknown: bool = args.fail_unknown
+    mode: Literal["id", "tag"] = args.mode
+    filters: list[str] = args.filters
+
+    if not filters:
+        parser.error("No filters provided.")
 
     with open(args.config) as pre_commit_config:
         pre_commit_config_content: str = pre_commit_config.read()

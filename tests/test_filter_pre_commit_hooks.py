@@ -25,6 +25,16 @@ def test_get_version() -> None:
     assert result.returncode == 0
 
 
+def test_filter_empty() -> None:
+    """
+    Tests that the script errors when no filters are provided.
+    """
+
+    result = run_with()
+    assert result.returncode != 0
+    assert "No filters provided." in result.stderr
+
+
 def test_unknown_fail_default() -> None:
     """
     Tests that the script by default fails when an unknown hook is specified to
