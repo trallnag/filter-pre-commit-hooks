@@ -66,7 +66,7 @@ Contributions are welcome. Please refer to [`CONTRIBUTE.md`](CONTRIBUTE.md).
 ## Licensing
 
 This work is licensed under the
-[ISC License](https://en.wikipedia.org/wiki/ISC_license). See
+[ISC license](https://en.wikipedia.org/wiki/ISC_license). See
 [`LICENSE`](LICENSE) for the license text.
 
 The license is also included in the script

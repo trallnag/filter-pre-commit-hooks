@@ -1,5 +1,5 @@
 #
-# ISC License
+# ISC
 #
 # Copyright Tim Schwenke <tim@trallnag.com>
 #
