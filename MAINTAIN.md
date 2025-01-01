@@ -23,3 +23,10 @@ other.
 
 One approach is to simply set the version in the config file to the ones
 specified in the lock file.
+
+## Update upstream Copier template
+
+This project is based on the following
+[Copier](https://copier.readthedocs.io/en/stable/) template:
+<https://github.com/trallnag/copier-template-python-script>. Consider updating
+things in the template repository as well.
