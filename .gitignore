@@ -13,4 +13,5 @@ tmp/
 .ruff_cache/
 
 # Python.
+**/__pycache__/
 *.pyc
