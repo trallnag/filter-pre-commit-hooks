@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0).
 
 ## Unreleased
 
+Nothing.
+
+## [1.1.0](https://github.com/trallnag/filter-pre-commit-hooks/compare/v1.0.0...v1.1.0) / 2025-01-02
+
 ### Added
 
 - Ensure that at least one filter is provided to script (in any mode).
