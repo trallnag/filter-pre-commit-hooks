@@ -1,3 +1,8 @@
+[![status](https://img.shields.io/badge/status-active-brightgreen)](#project-status)
+[![release](https://img.shields.io/github/v/release/trallnag/filter-pre-commit-hooks)](https://github.com/trallnag/filter-pre-commit-hooks/releases)
+[![ci](https://img.shields.io/github/actions/workflow/status/trallnag/filter-pre-commit-hooks/ci.yaml?label=ci)](https://github.com/trallnag/filter-pre-commit-hooks/actions/workflows/ci.yaml)
+[![release](https://img.shields.io/github/actions/workflow/status/trallnag/filter-pre-commit-hooks/release.yaml?label=release)](https://github.com/trallnag/filter-pre-commit-hooks/actions/workflows/release.yaml)
+
 # `filter_pre_commit_hooks.py`
 
 Small Python script that extracts and filters
@@ -54,6 +59,11 @@ where `<tags>` is replaced by the given tags:
 ^ *(?:- )?id: [\'\"]?(?P<hook>[a-z0-9-]+)[\'\"]?.*#.*
 [Tt]ags ?[:=] ?[0-9a-z, ]*\b(<tags>)\b[0-9a-z, ]*\..*$
 ```
+
+## Project status
+
+The project is maintained by me, [trallnag](https://github.com/trallnag), and I
+am interested in keeping it alive as I am actively using it.
 
 ## Versioning
 
