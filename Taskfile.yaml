@@ -62,7 +62,8 @@ tasks:
     desc: Run pre-commit hooks that format.
     cmds:
       - >-
-        export SKIP="$(python src/$SCRIPT_NAME.py --mode=tag format)"
+        SKIP="$(uv run scripts/filter_pre_commit_hooks.py --mode=tag format)"
+        && export SKIP
         && (pre-commit run --all-files || pre-commit run --all-files)
         | grep --perl-regexp --invert-match --regexp='\.\e.+Skipped'
 
@@ -83,7 +84,8 @@ tasks:
     desc: Run pre-commit hooks that lint.
     cmds:
       - >-
-        export SKIP="$(python src/$SCRIPT_NAME.py --mode=tag lint)"
+        SKIP="$(uv run scripts/filter_pre_commit_hooks.py --mode=tag lint)"
+        && export SKIP
         && pre-commit run --all-files
         | grep --perl-regexp --invert-match --regexp='\.\e.+Skipped'
 
