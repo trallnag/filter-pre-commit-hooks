@@ -43,12 +43,12 @@ tasks:
       - task: update-uv
 
   update-precommit:
-    desc: Update dependencies managed with pre-commit.
+    desc: Update pre-commit dependencies.
     cmds:
       - pre-commit autoupdate
 
   update-uv:
-    desc: Update dependencies managed with uv.
+    desc: Update uv dependencies.
     cmds:
       - uv sync --upgrade --all-extras --dev
 
