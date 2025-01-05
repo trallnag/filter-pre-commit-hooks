@@ -7,7 +7,9 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0).
 
 ## Unreleased
 
-Nothing.
+### Fixed
+
+- Switched minium required version of Python from 3.10 to 3.9.
 
 ## [1.1.0](https://github.com/trallnag/filter-pre-commit-hooks/compare/v1.0.0...v1.1.0) / 2025-01-02
 

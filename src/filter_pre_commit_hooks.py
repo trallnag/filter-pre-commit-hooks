@@ -1,6 +1,6 @@
 #
 # /// script
-# requires-python = ">=3.10"
+# requires-python = ">=3.9"
 # ///
 #
 # This work is available under the ISC license.
