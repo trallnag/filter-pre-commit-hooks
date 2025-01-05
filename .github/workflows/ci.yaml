@@ -59,11 +59,11 @@ jobs:
       - name: Run task init-uv
         run: task init-uv
 
-      - name: Run task format-precommit
-        run: task format-precommit
+      - name: Run task format
+        run: task format
 
-      - name: Run task lint-precommit
-        run: task lint-precommit
+      - name: Run task lint
+        run: task lint
 
       - name: Commit and push changes
         if: |
