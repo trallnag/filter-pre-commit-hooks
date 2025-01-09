@@ -16,6 +16,8 @@
 
   "semanticCommits": "enabled",
 
+  "automergeType": "branch",
+
   "pre-commit": {
     "enabled": true,
     "prBodyNotes": [""]

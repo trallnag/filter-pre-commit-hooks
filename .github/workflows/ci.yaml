@@ -9,10 +9,15 @@ on:
   pull_request:
   merge_group:
   push:
-    branches: [master, dev]
+    branches:
+      - "*"
   schedule:
     # At 04:04 on Monday.
     - cron: 4 4 * * 1
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 defaults:
   run:
