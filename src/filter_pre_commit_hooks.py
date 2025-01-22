@@ -25,7 +25,7 @@ from argparse import ArgumentParser, BooleanOptionalAction
 from pathlib import Path
 from typing import Literal
 
-VERSION = "1.1.1"
+VERSION = "1.1.2"
 
 parser = ArgumentParser(
     description=(

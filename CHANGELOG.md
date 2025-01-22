@@ -9,6 +9,12 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0).
 
 Nothing.
 
+## [1.1.2](https://github.com/trallnag/filter-pre-commit-hooks/compare/v1.1.1...v1.1.2) / 2025-01-22
+
+### Changed
+
+- Simplified code based on feedback from Ruff.
+
 ## [1.1.1](https://github.com/trallnag/filter-pre-commit-hooks/compare/v1.1.0...v1.1.1) / 2025-01-05
 
 ### Fixed
