@@ -14,3 +14,6 @@ Your environment should fulfill the following basic requirements:
 Common tasks like initialization and runnings tests are covered by and
 documented in [`Taskfile.yaml`](Taskfile.yaml). To run a complete suite of
 tasks, just invoke `task` without arguments.
+
+This projects supports [Development Containers](https://containers.dev/). Check
+out [`.devcontainer/README.md`](.devcontainer/README.md) for more information.
