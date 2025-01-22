@@ -25,7 +25,7 @@ from argparse import ArgumentParser, BooleanOptionalAction
 from pathlib import Path
 from typing import Literal
 
-VERSION = "1.1.1"
+VERSION = "1.1.2"
 
 parser = ArgumentParser(
     description=(
@@ -95,17 +95,17 @@ if __name__ == "__main__":
     mode: Literal["id", "tag"] = args.mode
     filters: list[str] = args.filters
 
-    with open(args.config) as pre_commit_config:
+    with Path.open(args.config) as pre_commit_config:
         pre_commit_config_content: str = pre_commit_config.read()
 
     # All hook identifiers that have been found in the pre-commit config file.
-    all_hooks: set[str] = set(
+    all_hooks: set[str] = {
         match.group("hook")
         for match in re.compile(
             r"^ *(?:- )?id: [\'\"]?(?P<hook>[a-z0-9-]+)[\'\"]?(?: +#.*)?$",
             re.MULTILINE,
         ).finditer(pre_commit_config_content)
-    )
+    }
 
     # All hook identifiers that should not be part of the final result set.
     excluded_hooks: set[str]
@@ -118,21 +118,19 @@ if __name__ == "__main__":
             unknown_hooks = excluded_hooks - all_hooks
 
             if len(unknown_hooks) > 0:
-                parser.error(f"Unknown hook(s): {sorted(list(unknown_hooks))}")
+                parser.error(f"Unknown hook(s): {sorted(unknown_hooks)}")
     else:
         # Validate that all filters are valid tags.
         regex = re.compile(r"^[a-z0-9]+$")
-        for filter in args.filters:
-            if not regex.match(filter):
+        for filterv in args.filters:
+            if not regex.match(filterv):
                 parser.error(
-                    (
-                        f"Invalid filter value: '{filter}'. "
-                        f"Must match regex: '{regex.pattern}'."
-                    )
+                    f"Invalid filter value: '{filterv}'. "
+                    f"Must match regex: '{regex.pattern}'.",
                 )
 
         # Excluded hooks are determined based on tags given as filters.
-        excluded_hooks = set(
+        excluded_hooks = {
             match.group("hook")
             for match in re.compile(
                 (
@@ -141,8 +139,8 @@ if __name__ == "__main__":
                 ).replace("<tags>", "|".join(args.filters)),
                 re.MULTILINE,
             ).finditer(pre_commit_config_content)
-        )
+        }
 
     filtered_hooks = all_hooks - excluded_hooks
 
-    print(",".join(sorted(list(filtered_hooks))))
+    print(",".join(sorted(filtered_hooks)))
