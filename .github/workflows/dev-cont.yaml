@@ -1,0 +1,23 @@
+name: Dev Cont
+
+#
+# Builds dev container and runs tests.
+#
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "*"
+  schedule:
+    - cron: 23 7 3 * *
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
