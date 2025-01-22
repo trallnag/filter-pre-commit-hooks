@@ -2,8 +2,12 @@ import subprocess
 
 
 def run_with(*args: str) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(
-        [
+    """
+    Run script with arguments.
+    """
+
+    return subprocess.run(  # noqa: S603
+        [  # noqa: S607
             "uv",
             "run",
             "src/filter_pre_commit_hooks.py",
