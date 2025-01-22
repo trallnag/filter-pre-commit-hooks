@@ -29,23 +29,24 @@ exclude = [
 select = ["ALL"]
 
 ignore = [
-  "COM812", # Redundant rule. Ruff recommends disabling it.
-  "D100", # Missing docstring in public module is fine.
-  "D104", # Missing docstring in public package is fine.
-  "D200", # One-line docstring on seperate line is fine.
-  "D202", # Blank line after docstring is preferred.
-  "D203", # Blank line before docstring not required.
-  "D205", # Blank line between summary and desc not required.
-  "D212", # First line in doc string must not be used.
-  "ISC001", # Redundant rule. Ruff recommends disabling it.
-  "T201", # Print statements are fine.
+  "COM812",  # Redundant rule. Ruff recommends disabling it.
+  "D100",    # Missing docstring in public module is fine.
+  "D104",    # Missing docstring in public package is fine.
+  "D200",    # One-line docstring on seperate line is fine.
+  "D202",    # Blank line after docstring is preferred.
+  "D203",    # Blank line before docstring not required.
+  "D205",    # Blank line between summary and desc not required.
+  "D212",    # First line in doc string must not be used.
+  "INP001",  # Implicit namespace packages are fine.
+  "ISC001",  # Redundant rule. Ruff recommends disabling it.
+  "T201",    # Print statements are fine.
 ]
 
 [tool.ruff.lint.extend-per-file-ignores]
 
 "tests/**/*.py" = [
-  "ARG", # Unused function args are fine.
-  "S101", # Asserts are fine.
+  "ARG",   # Unused function args are fine.
+  "S101",  # Asserts are fine.
 ]
 
 [tool.mypy]
