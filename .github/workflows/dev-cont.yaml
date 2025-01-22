@@ -6,9 +6,6 @@ name: Dev Cont
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - "*"
   schedule:
     - cron: 23 7 3 * *
 
