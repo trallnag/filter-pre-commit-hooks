@@ -10,11 +10,12 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "tamasfe.even-better-toml",
+        "Tyriar.sort-lines",
         "charliermarsh.ruff",
+        "mhutchie.git-graph",
         "ms-python.python",
+        "tamasfe.even-better-toml",
         "task.vscode-task",
-        "Tyriar.sort-lines"
       ]
     }
   },
