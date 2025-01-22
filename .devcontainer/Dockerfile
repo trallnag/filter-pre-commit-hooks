@@ -5,8 +5,11 @@ USER vscode
 # Install additional packages with APT.
 RUN <<-EOT
   set -eux
+
   export DEBIAN_FRONTEND=noninteractive
+
   sudo apt-get update
+
   sudo apt-get install --yes --no-install-recommends \
     curl \
     dnsutils \
@@ -27,12 +30,16 @@ EOT
 # Set up completion in Bash.
 RUN <<-EOT
 	set -eux
-	curl \
+
+  curl \
     --location --silent --show-error --fail \
     --output /tmp/taskfile-installer.sh \
     https://taskfile.dev/install.sh
+
   mkdir -p ~/.local/bin
   sh /tmp/taskfile-installer.sh -d -b ~/.local/bin
+
   mkdir -p ~/.local/share/bash-completion/completions
-  task --completion bash > ~/.local/share/bash-completion/completions/task
+  ~/.local/bin/task --completion bash \
+    > ~/.local/share/bash-completion/completions/task
 EOT
