@@ -1,0 +1,13 @@
+services:
+  vscode:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+      - pre-commit-cache:/home/vscode/.cache/pre-commit
+      - uv-cache:/home/vscode/.cache/uv
+    command: sleep infinity
+volumes:
+  pre-commit-cache:
+  uv-cache:

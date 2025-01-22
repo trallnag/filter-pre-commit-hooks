@@ -1,0 +1,28 @@
+{
+  "name": "filter-pre-commit-hooks",
+
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+  "dockerComposeFile": "docker-compose.yaml",
+
+  "service": "vscode",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "tamasfe.even-better-toml",
+        "charliermarsh.ruff",
+        "ms-python.python",
+        "task.vscode-task",
+        "Tyriar.sort-lines"
+      ]
+    }
+  },
+
+  "postCreateCommand": {
+    "fixVolumePreCommitCache": "sudo chown -R vscode:vscode /home/vscode/.cache/pre-commit",
+    "fixVolumeUvCache": "sudo chown -R vscode:vscode /home/vscode/.cache/uv"
+  },
+
+  "postStartCommand": "task init",
+}
