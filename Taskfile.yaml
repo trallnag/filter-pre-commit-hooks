@@ -71,7 +71,7 @@ tasks:
     desc: Run Ruff formatter and checker (fix).
     cmds:
       - uv run ruff format
-      - uv run ruff check --fix-only --unsafe-fixes
+      - uv run ruff check --fix-only
 
   lint:
     desc: Run linters.

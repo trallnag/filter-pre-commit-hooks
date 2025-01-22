@@ -84,7 +84,7 @@ repos:
         pass_filenames: false
         require_serial: true
         language: system
-        entry: uv run ruff check --fix --fix-only --unsafe-fixes
+        entry: uv run ruff check --fix --fix-only
         types: [python]
 
       - id: ruff-lint
