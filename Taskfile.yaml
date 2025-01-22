@@ -9,8 +9,8 @@ dotenv:
   - .env
 
 tasks:
-  desc: Init, format, and lint.
   default:
+    desc: Init, format, and lint.
     cmds:
       - task: init
       - task: format
