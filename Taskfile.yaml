@@ -34,7 +34,7 @@ tasks:
   init-uv:
     desc: Initialize uv.
     cmds:
-      - uv sync --locked --all-extras --dev
+      - uv sync --all-extras --dev
 
   update:
     desc: Update dependencies.
