@@ -6,7 +6,11 @@ name: Dev Cont
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - .devcontainer/**
   schedule:
+    # At 07:23 on day-of-month 3.
     - cron: 23 7 3 * *
 
 jobs:
