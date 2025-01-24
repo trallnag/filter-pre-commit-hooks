@@ -1,7 +1,7 @@
 {
   "name": "filter-pre-commit-hooks",
 
-  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "workspaceFolder": "/workspaces/filter-pre-commit-hooks",
 
   "dockerComposeFile": "docker-compose.yaml",
 
@@ -21,6 +21,7 @@
   },
 
   "postCreateCommand": {
+    "fixVolumeVenv": "sudo chown -R vscode:vscode /workspaces/filter-pre-commit-hooks/.venv",
     "fixVolumePreCommitCache": "sudo chown -R vscode:vscode /home/vscode/.cache/pre-commit",
     "fixVolumeUvCache": "sudo chown -R vscode:vscode /home/vscode/.cache/uv"
   },
