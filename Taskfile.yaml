@@ -10,7 +10,7 @@ dotenv:
 
 tasks:
   default:
-    desc: Init, format, and lint.
+    desc: Init, format, lint, and test.
     cmds:
       - task: init
       - task: format
@@ -20,10 +20,10 @@ tasks:
   init:
     desc: Initialize environment.
     cmds:
-      - task: init-precommit
-      - task: init-uv
+      - task: init:pre-commit
+      - task: init:uv
 
-  init-precommit:
+  init:pre-commit:
     desc: Initialize pre-commit.
     cmds:
       - pre-commit install --install-hooks
@@ -39,15 +39,15 @@ tasks:
   update:
     desc: Update dependencies.
     cmds:
-      - task: update-precommit
-      - task: update-uv
+      - task: update:pre-commit
+      - task: update:uv
 
-  update-precommit:
+  update:pre-commit:
     desc: Update pre-commit dependencies.
     cmds:
       - pre-commit autoupdate
 
-  update-uv:
+  update:uv:
     desc: Update uv dependencies.
     cmds:
       - uv sync --upgrade --all-extras --dev
@@ -55,19 +55,21 @@ tasks:
   format:
     desc: Run formatters.
     cmds:
-      - task: format-precommit
-      - task: format-ruff
+      - task: format:pre-commit
+      - task: format:shfmt
+      - task: format:ruff
 
-  format-precommit:
+  format:pre-commit:
     desc: Run pre-commit hooks that format.
     cmds:
-      - >-
-        SKIP="$(uv run scripts/filter_pre_commit_hooks.py --mode=tag format)"
-        && export SKIP
-        && (pre-commit run --all-files || pre-commit run --all-files)
-        | grep --perl-regexp --invert-match --regexp='\.\e.+Skipped'
+      - ./scripts/format-with-pre-commit.bash
 
-  format-ruff:
+  format:shfmt:
+    desc: Run shfmt.
+    cmds:
+      - shfmt --list --write scripts
+
+  format:ruff:
     desc: Run Ruff formatter and checker (fix).
     cmds:
       - uv run ruff format
@@ -77,24 +79,26 @@ tasks:
     desc: Run linters.
     cmds:
       - task: lint-precommit
-      - task: lint-ruff
-      - task: lint-mypy
+      - task: lint:shellcheck
+      - task: lint:ruff
+      - task: lint:mypy
 
-  lint-precommit:
+  lint:precommit:
     desc: Run pre-commit hooks that lint.
     cmds:
-      - >-
-        SKIP="$(uv run scripts/filter_pre_commit_hooks.py --mode=tag lint)"
-        && export SKIP
-        && pre-commit run --all-files
-        | grep --perl-regexp --invert-match --regexp='\.\e.+Skipped'
+      - ./scripts/lint-with-pre-commit.bash
 
-  lint-ruff:
+  lint:shellcheck:
+    desc: Run ShellCheck.
+    cmds:
+      - find scripts -name '*.bash' -o -name '*.sh' | xargs shellcheck
+
+  lint:ruff:
     desc: Run Ruff checker (nofix).
     cmds:
       - uv run ruff check --no-fix
 
-  lint-mypy:
+  lint:mypy:
     desc: Run mypy.
     cmds:
       - uv run dmypy run --timeout 3600 src tests
@@ -107,9 +111,4 @@ tasks:
   create-notes:
     desc: Create notes for latest release.
     cmds:
-      - mkdir -p tmp
-      - >-
-        awk '/^## /{count++} count==2{print} count==3{exit}' CHANGELOG.md
-        | tail +2 | awk 'NF {p=1} p' | tac | awk 'NF {p=1} p' | tac
-        | sed 's/^### /## /' > tmp/release.md
-      - uvx mdformat --wrap=10000 tmp/release.md
+      - ./scripts/create-release-notes.bash

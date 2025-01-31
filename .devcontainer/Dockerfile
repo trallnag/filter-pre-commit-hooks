@@ -2,9 +2,13 @@ FROM  mcr.microsoft.com/devcontainers/python:latest
 
 USER vscode
 
+# Perform general setup.
 # Install additional packages with APT.
 RUN <<-EOT
   set -eux
+
+  mkdir -p ~/.local/bin
+  mkdir -p ~/.local/share/bash-completion/completions
 
   export DEBIAN_FRONTEND=noninteractive
 
@@ -20,6 +24,8 @@ EOT
 RUN <<-EOT
 	set -eux
 
+  pipx --version
+
 	pipx install \
     copier \
     pre-commit \
@@ -31,15 +37,12 @@ EOT
 RUN <<-EOT
 	set -eux
 
-  curl \
-    --location --silent --show-error --fail \
-    --output /tmp/taskfile-installer.sh \
-    https://taskfile.dev/install.sh
+  curl --location --silent --show-error --fail \
+    https://taskfile.dev/install.sh \
+    | sh -s -- -b ~/.local/bin
 
-  mkdir -p ~/.local/bin
-  sh /tmp/taskfile-installer.sh -d -b ~/.local/bin
+  ~/.local/bin/task --version
 
-  mkdir -p ~/.local/share/bash-completion/completions
   ~/.local/bin/task --completion bash \
     > ~/.local/share/bash-completion/completions/task
 EOT
