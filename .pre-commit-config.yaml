@@ -64,7 +64,7 @@ repos:
         types: [markdown]
 
   - repo: https://github.com/google/yamlfmt
-    rev: v0.14.0
+    rev: v0.15.0
     hooks:
       - id: yamlfmt # Tags: format.
         name: Format YAML files with yamlfmt
