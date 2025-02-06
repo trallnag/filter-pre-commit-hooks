@@ -3,76 +3,108 @@ repos:
     rev: v5.0.0
     hooks:
       # Git style.
-      - id: check-added-large-files # Tags: lint.
+      - id: check-added-large-files
+        alias: check-added-large-files (check, task)
         name: Check large files
 
-      - id: check-merge-conflict # Tags: lint.
+      - id: check-merge-conflict
+        alias: check-merge-conflict (check, task)
         name: Check merge conflicts
 
-      - id: check-vcs-permalinks # Tags: lint.
+      - id: check-vcs-permalinks
+        alias: check-vcs-permalinks (check, task)
         name: Check VCS permalinks
 
-      - id: forbid-new-submodules # Tags: lint.
+      - id: forbid-new-submodules
+        alias: forbid-new-submodules (check, task)
         name: Check new submodules
 
       # Common errors.
-      - id: destroyed-symlinks # Tags: lint.
+      - id: destroyed-symlinks
+        alias: destroyed-symlinks (check, task)
         name: Check destroyed symlinks
 
-      - id: check-executables-have-shebangs # Tags: lint.
+      - id: check-executables-have-shebangs
+        alias: check-executables-have-shebangs (check, task)
         name: Check executables have shebangs
 
-      - id: check-shebang-scripts-are-executable # Tags: lint.
+      - id: check-shebang-scripts-are-executable
+        alias: check-shebang-scripts-are-executable (check, task)
         name: Check shebang scripts are executable
 
-      - id: check-yaml # Tags: lint.
+      - id: check-yaml
+        alias: check-yaml (check, task)
         name: Check YAML files
         args: [--unsafe]
 
-      - id: end-of-file-fixer # Tags: format.
+      - id: end-of-file-fixer
+        alias: end-of-file-fixer (fix, task)
         name: Fix end of files
 
-      - id: fix-byte-order-marker # Tags: format.
+      - id: fix-byte-order-marker
+        alias: fix-byte-order-marker (fix, task)
         name: Fix byte order markers
 
-      - id: trailing-whitespace # Tags: format.
+      - id: trailing-whitespace
+        alias: trailing-whitespace (fix, task)
         name: Fix trailing whitespace
         args: [--markdown-linebreak-ext=md]
 
       # Cross platform.
-      - id: check-case-conflict # Tags: lint.
+      - id: check-case-conflict
+        alias: check-case-conflict (check, task)
         name: Check case conflicts
 
-      - id: mixed-line-ending # Tags: format.
+      - id: mixed-line-ending
+        alias: mixed-line-ending (fix, task)
         name: Fix mixed line endings
         args: [--fix=lf]
 
       # Security.
-      - id: detect-aws-credentials # Tags: lint.
+      - id: detect-aws-credentials
+        alias: detect-aws-credentials (check, task)
         name: Detect AWS credentials
         args: [--allow-missing-credentials]
 
-      - id: detect-private-key # Tags: lint.
+      - id: detect-private-key
+        alias: detect-private-key (check, task)
         name: Detect private keys
 
-  - repo: https://github.com/rbubley/mirrors-prettier
-    rev: v3.4.2
-    hooks:
-      - id: prettier # Tags: format.
-        name: Format Markdown files with Prettier
-        args: [--prose-wrap=always]
-        types: [markdown]
-
   - repo: https://github.com/google/yamlfmt
-    rev: v0.14.0
+    rev: v0.15.0
     hooks:
-      - id: yamlfmt # Tags: format.
+      - id: yamlfmt
+        alias: yamlfmt (fix, task)
         name: Format YAML files with yamlfmt
 
   - repo: local
     hooks:
+      - id: mdformat
+        alias: mdformat (fix)
+        name: Format Markdown files with mdformat
+        language: system
+        entry: mdformat
+        types: [markdown]
+
+      - id: shfmt
+        alias: shfmt (fix)
+        name: Format shell scripts with shfmt
+        language: system
+        require_serial: true
+        entry: shfmt --write
+        types: [bash, sh]
+
+      - id: shellcheck
+        alias: shellcheck (check)
+        name: Check shell scripts with ShellCheck
+        require_serial: true
+        language: system
+        entry: shellcheck
+        types: [bash, sh]
+
       - id: ruff-format
-        name: Run Ruff formatter
+        alias: ruff-format (fix)
+        name: Format Python files with Ruff formatter
         pass_filenames: false
         require_serial: true
         language: system
@@ -80,7 +112,8 @@ repos:
         types: [python]
 
       - id: ruff-fix
-        name: Run Ruff checker (fix)
+        alias: ruff-fix (fix)
+        name: Fix Python files with Ruff checker
         pass_filenames: false
         require_serial: true
         language: system
@@ -88,7 +121,8 @@ repos:
         types: [python]
 
       - id: ruff-lint
-        name: Run Ruff checker (nofix)
+        alias: ruff-lint (check)
+        name: Check Python files with Ruff checker
         pass_filenames: false
         require_serial: true
         language: system
@@ -96,7 +130,8 @@ repos:
         types: [python]
 
       - id: mypy
-        name: mypy
+        alias: mypy (check)
+        name: Check Python files with mypy
         language: system
         entry: uv run dmypy run --timeout 3600 src
         pass_filenames: false

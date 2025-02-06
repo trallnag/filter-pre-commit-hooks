@@ -7,24 +7,25 @@
 
   "service": "vscode",
 
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "Tyriar.sort-lines",
-        "charliermarsh.ruff",
-        "mhutchie.git-graph",
-        "ms-python.python",
-        "tamasfe.even-better-toml",
-        "task.vscode-task",
-      ]
-    }
-  },
+  // "customizations": {
+  //   "vscode": {
+  //     "extensions": [
+  //       "EditorConfig.EditorConfig",
+  //       "Tyriar.sort-lines",
+  //       "charliermarsh.ruff",
+  //       "mhutchie.git-graph",
+  //       "ms-python.python",
+  //       "nefrob.vscode-just-syntax",
+  //       "tamasfe.even-better-toml",
+  //       "task.vscode-task",
+  //       "waderyan.gitblame"
+  //     ]
+  //   }
+  // },
 
   "postCreateCommand": {
-    "fixVolumeVenv": "sudo chown -R vscode:vscode /workspaces/filter-pre-commit-hooks/.venv",
-    "fixVolumePreCommitCache": "sudo chown -R vscode:vscode /home/vscode/.cache/pre-commit",
-    "fixVolumeUvCache": "sudo chown -R vscode:vscode /home/vscode/.cache/uv"
+    //"fixVolumeVenv": "sudo chown -R vscode:vscode /workspaces/filter-pre-commit-hooks/.venv"
   },
 
-  "postStartCommand": "task init",
+  "postStartCommand": "echo lol"
 }

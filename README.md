@@ -6,59 +6,44 @@
 # `filter_pre_commit_hooks.py`
 
 Small Python script that extracts and filters
-[pre-commit](https://pre-commit.com/) hooks so that only a subset can be run.
-Why is such a script helpful? Pre-commit does not provide a way to run a
-selection of hooks. It is only possible to skip hooks.
+[pre-commit](https://pre-commit.com/) hooks so that only a subset can be run by
+pre-commit. Why is such a script helpful? Pre-commit only provides a way to skip
+hooks. There is no way to explicitly state which hooks should be run.
 
 The standalone script is called `filter_pre_commit_hooks.py` and can be found
 [here](src/filter_pre_commit_hooks.py). The license is included in the file.
 
-It gets a comma-separated list of all pre-commit hooks except the ones specified
-to be filtered out. The returned result can be used to set the `SKIP` env var to
-only run a subset of hooks when executing a command like
-`pre-commit run --all-files`.
-
-Here it is used to run the hooks `foo` and `bar`:
+By default, the script returns all hooks that are tagged as required. In the
+following example, it is used to run all hooks that are tagged with `fix` and
+`task`:
 
 ```sh
-export SKIP=$(python filter_pre_commit_hooks.py foo bar)
-pre-commit run --all-files
+SKIP=$(uv run filter_pre_commit_hooks.py fix task) pre-commit run -a
 ```
 
-The hook identifiers are extracted from the config using the following regex:
+Note that in the example the script is executed with `uv run`. A subcommand of
+[uv](https://docs.astral.sh/) a package manager for Python. This is because the
+script contains
+[inline script metadata](https://packaging.python.org/en/latest/specifications/inline-script-metadata/#inline-script-metadata)
+specifying required dependencies.
 
-```text
-^ *(?:- )?id: [\'\"]?(?P<hook>[a-z0-9-]+)[\'\"]?(?: +#.*)?$
+Tags are extracted from the "alias" field of every hook. Tags are declared by
+putting them into parenthesis at the end of the respective alias. Individual
+tags are separated by commas. Here are two exemplary aliases:
+
+```txt
+forbid-new-submodules (check, task)
+mixed-line-ending (fix, task)
 ```
 
-Here it is used to run all hooks that are part of the `lint` group:
+Options can be passed to the script to change the behavior of the script. For
+example, to filter hooks by their identifier instead of their tags. For more
+information on this, try out the `--help` option of the script or read the
+source code.
 
-```sh
-export SKIP=$(python filter_pre_commit_hooks.py --mode=group lint)
-pre-commit run --all-files
-```
-
-In the latter case, the corresponding pre-commit config file looks like this:
-
-```yaml
-repos:
-  - repo: local
-    hooks:
-      - id: ruff-format # Tags: format.
-        language: system
-        entry: I will not run
-      - id: ruff-format # Tags: lint.
-        language: system
-        entry: I will run
-```
-
-The hook identifiers are extracted from the config using the following regex,
-where `<tags>` is replaced by the given tags:
-
-```text
-^ *(?:- )?id: [\'\"]?(?P<hook>[a-z0-9-]+)[\'\"]?.*#.*
-[Tt]ags ?[:=] ?[0-9a-z, ]*\b(<tags>)\b[0-9a-z, ]*\..*$
-```
+A valid config used with the script can be found in
+[`.pre-commit-config.yaml`](.pre-commit-config.yaml). Some tasks in
+[`Taskfile.yaml`](Taskfile.yaml) run selected pre-commit hooks using the script.
 
 ## Project status
 

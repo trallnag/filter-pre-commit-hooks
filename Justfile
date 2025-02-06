@@ -1,0 +1,92 @@
+set shell := [
+  "bash",
+  "-o", "errexit", "-o", "nounset", "-o", "pipefail",
+  "-O", "extglob", "-O", "globstar", "-O", "nullglob",
+  "-c"
+]
+
+# Init, fix, check, and test.
+default: init fix check test
+
+# Initialize environment.
+init:
+  # Check tool availability.
+  copier --version
+  just --version
+  mdformat --version
+  pipx --version
+  pre-commit --version
+  shellcheck --version
+  shfmt --version
+  task --version
+  uv --version
+
+  # Install pre-commit hooks.
+  pre-commit install --install-hooks
+  pre-commit install --install-hooks --hook-type commit-msg
+  pre-commit install --install-hooks --hook-type post-checkout
+  pre-commit install --install-hooks --hook-type post-merge
+
+  # Initialize project with uv.
+  uv sync --all-extras --dev
+
+# Update dependencies.
+update:
+  # Try to update dependencies managed with Homebrew.
+  ./scripts/try-update-brew.bash just shellcheck shfmt task uv
+
+  # Try to update dependencies managed with pipx.
+  ./scripts/try-update-pipx.bash copier mdformat pre-commit
+
+  # Update pre-commit repositories and hooks.
+  pre-commit autoupdate
+
+  # Update project deps managed with uv.
+  uv sync --upgrade --all-extras --dev
+
+# Run recipes that fix stuff.
+fix: fix--pre-commit fix--mdformat fix--shfmt fix--ruff
+
+# Run pre-commit hooks that fix stuff.
+fix--pre-commit:
+  ./scripts/fix-with-pre-commit.bash
+
+# Format Markdown files with mdformat.
+fix--mdformat:
+  mdformat **/*.md
+
+# Format shell scripts with shfmt.
+fix--shfmt:
+  shfmt --list --write **/*.bash **/*.sh
+
+# Fix Python files with Ruff.
+fix--ruff:
+  uv run ruff format
+  uv run ruff check --fix-only
+
+# Run recipes that check stuff.
+check: check--pre-commit check--shellcheck check--ruff check--mypy
+
+# Run pre-commit hooks that check stuff.
+check--pre-commit:
+  ./scripts/check-with-pre-commit.bash
+
+# Lint shell scripts with ShellCheck
+check--shellcheck:
+  shellcheck **/*.bash **/*.sh
+
+# Lint Python files with Ruff.
+check--ruff:
+  uv run ruff check --no-fix
+
+# Lint Python files with mypy.
+check--mypy:
+  uv run dmypy run --timeout 3600 src tests
+
+# Test project with pytest
+test:
+  uv run pytest --cov-report=term-missing:skip-covered --cov=src
+
+# Create notes for latest release.
+create-notes:
+  ./scripts/create-release-notes.bash
