@@ -1,8 +1,4 @@
 #
-# /// script
-# requires-python = ">=3.9"
-# ///
-#
 # This work is available under the ISC license.
 #
 # Copyright Tim Schwenke <tim@trallnag.com>
@@ -19,128 +15,269 @@
 # OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 # PERFORMANCE OF THIS SOFTWARE.
 #
+# /// script
+#
+# requires-python = ">=3.12"
+#
+# dependencies = [
+#   "click>=8.1.8",
+#   "pyyaml>=6.0.2,<7.0.0",
+# ]
+#
+# ///
+#
 
 import re
-from argparse import ArgumentParser, BooleanOptionalAction
+from enum import StrEnum
 from pathlib import Path
-from typing import Literal
+from typing import TypedDict, override
+
+import click
+import yaml
 
 VERSION = "1.1.2"
 
-parser = ArgumentParser(
-    description=(
-        "Gets a comma-separated list of all pre-commit hooks except the ones "
-        "specified to be filtered out. The returned result can be used to set "
-        "the `SKIP` env var to only run a subset of hooks when executing a "
-        "command like `pre-commit run --all-files`."
-    ),
-    epilog=(
-        "For more information, check out "
-        "<https://github.com/trallnag/filter-pre-commit-hooks>."
-    ),
-)
+HELP = """
+Filter pre-commit hooks.
 
-parser.add_argument(
-    "-v",
-    "--version",
-    action="version",
-    version=f"%(prog)s {VERSION}",
-)
+The script output can be used to populate the SKIP environment variable, so
+that only a subset of hooks is executed when running pre-commit.
 
-parser.add_argument(
-    "--config",
-    type=Path,
-    default=".pre-commit-config.yaml",
-    help=("Path to the pre-commit config. Defaults to `%(default)s`."),
-)
+Here it is used to run all hooks that are tagged with "fix" and "task":
 
-parser.add_argument(
-    "--fail-unknown",
-    action=BooleanOptionalAction,
-    default=True,
-    help=(
-        "Fail if an unknown hook is specified to be filtered out. "
-        "Only relevant in the case of `id` mode. Defaults to `%(default)s`."
-    ),
-)
+\b
+SKIP=$(filter_pre_commit_hooks.py fix task) pre-commit run -a
 
-parser.add_argument(
-    "--mode",
-    choices=["id", "tag"],
-    default="id",
-    help=(
-        "Mode to use when filtering out hooks. `id` looks for the hook id "
-        "declared as an ordinary attribute. `tag` looks for the hook tag. "
-        "Defaults to `%(default)s`."
-    ),
-)
+Tags are extracted from the "alias" field of every hook. Tags are declared by
+putting them into parenthesis at the end of the respective alias. Individual
+tags are separated by commas. Here are two exemplary aliases:
 
-parser.add_argument(
+\b
+- forbid-new-submodules (check, task)
+- mixed-line-ending (fix, task)
+
+Options can be passed to change the behavior of the script. For example, to
+filter hooks by their identifier instead of their tags.
+"""
+
+EPILOG = """
+\b
+For more information, check out
+<https://github.com/trallnag/filter-pre-commit-hooks>.
+"""
+
+
+class Command(click.Command):
+    """Custom command. Only used to customize the epilog formatting."""
+
+    @override
+    def format_epilog(self, ctx: click.Context, formatter: click.HelpFormatter) -> None:
+        """Format the epilog. Just like the original, but without indentation."""
+
+        if self.epilog:
+            formatter.write_paragraph()
+            formatter.write_text(self.epilog)
+
+
+class Target(StrEnum):
+    """Target to filter hooks by."""
+
+    ID = "id"
+    """Filter hooks by their identifier."""
+
+    TAG = "tag"
+    """Filter hooks by their tag."""
+
+
+class Mode(StrEnum):
+    """Mode to filter hooks by target."""
+
+    ALL_OF = "all-of"
+    """Filter hooks that have all of the given values for target."""
+
+    ANY_OF = "any-of"
+    """Filter hooks that have any of the given values for target."""
+
+
+class Orient(StrEnum):
+    """Orient to filter hooks by."""
+
+    INVERT = "invert"
+    """Output hook identifiers that don't match the filters."""
+
+    NO_INVERT = "no-invert"
+    """Output hook identifiers that match the filters."""
+
+
+class Format(StrEnum):
+    """Format to output hooks."""
+
+    COMMA = "comma"
+    """Output hooks as comma-separated list."""
+
+    NEWLINE = "newline"
+    """Output hooks as newline-separated list."""
+
+
+class Hook(TypedDict):
+    """Pre-commit hook."""
+
+    id: str
+    alias: str
+
+
+class Repo(TypedDict):
+    """Pre-commit repository."""
+
+    hooks: list[Hook]
+
+
+class Config(TypedDict):
+    """Pre-commit config."""
+
+    repos: list[Repo]
+
+
+def extract_tags(alias: str | None) -> set[str]:
+    """Extract tags from alias."""
+
+    if alias is None:
+        return set()
+
+    match = re.match(r".*\((?P<tags>.*)\)$", alias)
+
+    if match is None:
+        return set()
+
+    return {tag.strip() for tag in match.group("tags").split(",")}
+
+
+def is_hook_filtered(
+    hook: Hook,
+    filters: list[str],
+    target: Target,
+    mode: Mode,
+    orient: Orient,
+) -> bool:
+    """Decide if hook is filtered or not."""
+
+    filtered = False
+
+    if target == Target.TAG:
+        tags = extract_tags(hook.get("alias"))
+
+        if mode == Mode.ALL_OF:
+            filtered = all(f in tags for f in filters)
+        else:
+            filtered = any(f in tags for f in filters)
+    elif target == Target.ID:
+        if mode == Mode.ALL_OF:
+            filtered = all(f == hook["id"] for f in filters)
+        else:
+            filtered = any(f == hook["id"] for f in filters)
+
+    return not filtered if orient == Orient.INVERT else filtered
+
+
+def format_hooks(
+    hooks: set[str],
+    output_format: Format,
+) -> str:
+    """Format hooks."""
+
+    if output_format == Format.COMMA:
+        return ", ".join(sorted(hooks))
+
+    return "\n".join(sorted(hooks))
+
+
+@click.command(
+    cls=Command,
+    context_settings={
+        "help_option_names": ["-h", "--help"],
+        "show_default": True,
+    },
+    help=HELP,
+    epilog=EPILOG,
+)
+@click.argument(
     "filters",
-    type=str,
-    nargs="+",
+    envvar="FILTERS",
+    type=click.STRING,
+    nargs=-1,
+)
+@click.option(
+    "--config",
+    type=click.Path(
+        exists=True,
+        file_okay=True,
+        readable=True,
+        resolve_path=True,
+        allow_dash=True,
+        path_type=Path,
+    ),
+    default=".pre-commit-config.yaml",
+    help="Path to the pre-commit config file.",
+)
+@click.option(
+    "--target",
+    type=click.Choice([target.value for target in Target]),
+    default=Target.TAG,
     help=(
-        "What to filter out, i.e. what should not show up in the resulting "
-        "list. In the `id` mode, these are the hook identifiers themselves to "
-        "exclude. In the `tag` mode, these are the hook identifiers that are "
-        "associated with at least one of the specified tags to exclude."
+        "Target to filter hooks by. "
+        "With `id`, the hook identifier is filtered. "
+        "With `tag`, the hook tags are filtered."
     ),
 )
+@click.option(
+    "--mode",
+    type=click.Choice([mode.value for mode in Mode]),
+    default=Mode.ALL_OF,
+    help=(
+        "Mode to filter hooks by target. "
+        "With `all_of`, all filters must match. "
+        "With `any_of`, any filter must match."
+    ),
+)
+@click.option(
+    "--orient",
+    type=click.Choice([orient.value for orient in Orient]),
+    default=Orient.INVERT,
+    help=(
+        "Invert the filter. "
+        "With invert, hooks that match the filter are excluded from output. "
+        "With no-invert, only hooks that match the filter are included in output."
+    ),
+)
+@click.option(
+    "--format",
+    "o_format",
+    type=click.Choice([o_format.value for o_format in Format]),
+    default=Format.COMMA,
+)
+@click.version_option(VERSION)
+def filter_pre_commit_hooks(  # noqa: PLR0913
+    filters: list[str],
+    config: Path,
+    target: Target,
+    mode: Mode,
+    orient: Orient,
+    o_format: Format,
+) -> None:
+    """Filter pre-commit hooks."""
+
+    with Path.open(config) as pre_commit_config:
+        data: Config = yaml.safe_load(pre_commit_config)
+
+    filtered_hooks = set()
+
+    for repo in data["repos"]:
+        for hook in repo["hooks"]:
+            if is_hook_filtered(hook, filters, target, mode, orient):
+                filtered_hooks.add(hook["id"])
+
+    click.echo(format_hooks(filtered_hooks, o_format))
+
 
 if __name__ == "__main__":
-    args = parser.parse_args()
-
-    config: Path = args.config
-    fail_unknown: bool = args.fail_unknown
-    mode: Literal["id", "tag"] = args.mode
-    filters: list[str] = args.filters
-
-    with Path.open(args.config) as pre_commit_config:
-        pre_commit_config_content: str = pre_commit_config.read()
-
-    # All hook identifiers that have been found in the pre-commit config file.
-    all_hooks: set[str] = {
-        match.group("hook")
-        for match in re.compile(
-            r"^ *(?:- )?id: [\'\"]?(?P<hook>[a-z0-9-]+)[\'\"]?(?: +#.*)?$",
-            re.MULTILINE,
-        ).finditer(pre_commit_config_content)
-    }
-
-    # All hook identifiers that should not be part of the final result set.
-    excluded_hooks: set[str]
-
-    if args.mode == "id":
-        # Excluded hooks are the ones that have been specified as filters.
-        excluded_hooks = set(args.filters)
-
-        if args.fail_unknown:
-            unknown_hooks = excluded_hooks - all_hooks
-
-            if len(unknown_hooks) > 0:
-                parser.error(f"Unknown hook(s): {sorted(unknown_hooks)}")
-    else:
-        # Validate that all filters are valid tags.
-        regex = re.compile(r"^[a-z0-9]+$")
-        for filterv in args.filters:
-            if not regex.match(filterv):
-                parser.error(
-                    f"Invalid filter value: '{filterv}'. "
-                    f"Must match regex: '{regex.pattern}'.",
-                )
-
-        # Excluded hooks are determined based on tags given as filters.
-        excluded_hooks = {
-            match.group("hook")
-            for match in re.compile(
-                (
-                    r"^ *(?:- )?id: [\'\"]?(?P<hook>[a-z0-9-]+)[\'\"]?.*#.*"
-                    r"[Tt]ags ?[:=] ?[0-9a-z, ]*\b(<tags>)\b[0-9a-z, ]*\..*$"
-                ).replace("<tags>", "|".join(args.filters)),
-                re.MULTILINE,
-            ).finditer(pre_commit_config_content)
-        }
-
-    filtered_hooks = all_hooks - excluded_hooks
-
-    print(",".join(sorted(filtered_hooks)))
+    filter_pre_commit_hooks()

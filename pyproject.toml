@@ -4,19 +4,35 @@ name = "filter-pre-commit-hooks"
 
 version = "1.1.2"
 
-requires-python = ">=3.9"
+requires-python = ">=3.12"
+
+dependencies = [
+  "click>=8.1.8",
+  "pyyaml>=6.0.2,<7.0.0",
+  "types-pyyaml>=6.0.12.20241230",
+]
 
 [dependency-groups]
 
 dev = [
   "mypy>=1.14.1",
   "pytest>=8.3.4",
+  "pytest-cov>=6.0.0",
   "ruff>=0.8.4",
 ]
 
+[build-system]
+
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [tool.uv]
 
-package = false
+package = true
+
+[tool.hatch.build.targets.wheel]
+
+only-include = ["src"]
 
 [tool.ruff]
 
@@ -30,6 +46,7 @@ exclude = [
 select = ["ALL"]
 
 ignore = [
+  "B026",    # Star-arg unpacking after a keyword arg is fine.
   "COM812",  # Redundant rule. Ruff recommends disabling it.
   "D100",    # Missing docstring in public module is fine.
   "D104",    # Missing docstring in public package is fine.
@@ -40,7 +57,6 @@ ignore = [
   "D212",    # First line in doc string must not be used.
   "INP001",  # Implicit namespace packages are fine.
   "ISC001",  # Redundant rule. Ruff recommends disabling it.
-  "T201",    # Print statements are fine.
 ]
 
 [tool.ruff.lint.extend-per-file-ignores]
@@ -57,3 +73,9 @@ disallow_any_unimported = true
 no_implicit_optional = true
 check_untyped_defs = true
 warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+
+pythonpath = [
+  "src"
+]
