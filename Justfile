@@ -17,7 +17,6 @@ init:
     .cache/ruff
 
   # Check tool availability.
-  copier --version
   mdformat --version
   pre-commit --version
   shellcheck --version
