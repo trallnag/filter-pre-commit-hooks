@@ -1,3 +1,4 @@
+.cache/
 .coverage
 .local/
 .venv/
@@ -6,13 +7,6 @@ tmp/
 
 # Mypy.
 .dmypy.json
-.mypy_cache/
-
-# Pytest.
-.pytest_cache/
-
-# Ruff.
-.ruff_cache/
 
 # Python.
 **/__pycache__/
