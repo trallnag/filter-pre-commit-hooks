@@ -1,7 +1,7 @@
 name: Dev Cont
 
 #
-# Builds dev container and runs task.
+# Builds dev container and runs default just recipe.
 #
 
 on:
@@ -34,7 +34,7 @@ jobs:
         run: devcontainer up --workspace-folder=.
 
       - name: Run task in dev container
-        run: devcontainer exec --workspace-folder=. task
+        run: devcontainer exec --workspace-folder=. just
 
   keep-enabled:
     name: Keep Enabled
