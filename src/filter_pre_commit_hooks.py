@@ -1,3 +1,4 @@
+#!/usr/bin/env -S uv run --script
 #
 # This work is available under the ISC license.
 #

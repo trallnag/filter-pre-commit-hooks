@@ -58,7 +58,8 @@ ignore = [
   "D203",    # Blank line before docstring not required.
   "D205",    # Blank line between summary and desc not required.
   "D212",    # First line in doc string must not be used.
-  "INP001",  # Implicit namespace packages are fine.
+  "EXE003",  # Python script with uv shebang is fine.
+  "INP001",  # Implicit namespace package is fine.
   "ISC001",  # Redundant rule. Ruff recommends disabling it.
 ]
 

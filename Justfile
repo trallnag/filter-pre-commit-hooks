@@ -10,16 +10,20 @@ default: init fix check test
 
 # Initialize environment.
 init:
+  # Create local-only directories.
+  mkdir -p .cache .local .venv tmp \
+    .cache/mypy \
+    .cache/pytest \
+    .cache/ruff
+
   # Check tool availability.
   copier --version
-  just --version
   mdformat --version
-  pipx --version
   pre-commit --version
   shellcheck --version
   shfmt --version
-  task --version
   uv --version
+  yamlfmt --version
 
   # Install pre-commit hooks.
   pre-commit install --install-hooks
@@ -32,11 +36,11 @@ init:
 
 # Update dependencies.
 update:
-  # Try to update dependencies managed with Homebrew.
-  ./scripts/try-update-brew.bash just shellcheck shfmt task uv
+  # Try to update tools managed with Homebrew.
+  ./scripts/update-pkgs-brew.bash just shellcheck shfmt task uv yamlfmt
 
-  # Try to update dependencies managed with pipx.
-  ./scripts/try-update-pipx.bash copier mdformat pre-commit
+  # Try to update tools managed with uv.
+  ./scripts/update-pkgs-uv.bash copier mdformat pre-commit
 
   # Update pre-commit repositories and hooks.
   pre-commit autoupdate
@@ -49,7 +53,7 @@ fix: fix--pre-commit fix--mdformat fix--shfmt fix--ruff
 
 # Run pre-commit hooks that fix stuff.
 fix--pre-commit:
-  ./scripts/fix-with-pre-commit.bash
+  ./scripts/run-pre-commit-fixes.bash
 
 # Format Markdown files with mdformat.
 fix--mdformat:
@@ -69,7 +73,7 @@ check: check--pre-commit check--shellcheck check--ruff check--mypy
 
 # Run pre-commit hooks that check stuff.
 check--pre-commit:
-  ./scripts/check-with-pre-commit.bash
+  ./scripts/run-pre-commit-checks.bash
 
 # Lint shell scripts with ShellCheck
 check--shellcheck:
