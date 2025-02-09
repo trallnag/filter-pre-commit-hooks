@@ -17,11 +17,11 @@
 #
 # /// script
 #
-# requires-python = ">=3.12"
+# requires-python = ">= 3.12"
 #
 # dependencies = [
-#   "click>=8.1.8",
-#   "pyyaml>=6.0.2,<7.0.0",
+#   "click == 8.1.8",
+#   "pyyaml == 6.0.2",
 # ]
 #
 # ///
