@@ -70,15 +70,15 @@ repos:
         alias: detect-private-key (check, task)
         name: Detect private keys
 
-  - repo: https://github.com/google/yamlfmt
-    rev: v0.15.0
+  - repo: local
     hooks:
       - id: yamlfmt
         alias: yamlfmt (fix, task)
         name: Format YAML files with yamlfmt
+        language: system
+        entry: yamlfmt
+        types: [yaml]
 
-  - repo: local
-    hooks:
       - id: mdformat
         alias: mdformat (fix)
         name: Format Markdown files with mdformat
