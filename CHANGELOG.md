@@ -7,7 +7,10 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0).
 
 ## Unreleased
 
-Nothing.
+### Changed
+
+- **BREAKING:** Complete rewrite of the script. It is best to check out the
+  README and the help message of the script for more information.
 
 ## [1.1.2](https://github.com/trallnag/filter-pre-commit-hooks/compare/v1.1.1...v1.1.2) / 2025-01-22
 
