@@ -17,8 +17,8 @@ Pick a name for the new release. It must follow
 VERSION=1.0.1
 ```
 
-Bump the version constants in [`pyproject.toml`](pyproject.toml) and
-[`src/filter_pre_commit_hooks.py`](src/filter_pre_commit_hooks.py):
+Bump the version constants in [`pyproject.toml`](./pyproject.toml) and
+[`src/filter_pre_commit_hooks.py`](./src/filter_pre_commit_hooks.py):
 
 ```sh
 sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
@@ -26,7 +26,7 @@ sed -i "s/^VERSION = \".*\"/VERSION = \"$VERSION\"/" src/filter_pre_commit_hooks
 uv sync
 ```
 
-Now make sure that [`CHANGELOG.md`](CHANGELOG.md) is up-to-date.
+Now make sure that [`CHANGELOG.md`](./CHANGELOG.md) is up-to-date.
 
 Adjust entries in the changelog for example by adding additional examples or
 highlighting breaking changes.

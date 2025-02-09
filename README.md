@@ -11,7 +11,7 @@ pre-commit. Why is such a script helpful? Pre-commit only provides a way to skip
 hooks. There is no way to explicitly state which hooks should be run.
 
 The standalone script is called `filter_pre_commit_hooks.py` and can be found
-[here](src/filter_pre_commit_hooks.py). The license is included in the file.
+[here](./src/filter_pre_commit_hooks.py). The license is included in the file.
 
 By default, the script returns all hooks that are tagged as required. In the
 following example, it is used to run all hooks that are tagged with `fix` and
@@ -42,8 +42,8 @@ information on this, try out the `--help` option of the script or read the
 source code.
 
 A valid config used with the script can be found in
-[`.pre-commit-config.yaml`](.pre-commit-config.yaml). Some tasks in
-[`Taskfile.yaml`](Taskfile.yaml) run selected pre-commit hooks using the script.
+[`.pre-commit-config.yaml`](./.pre-commit-config.yaml). Some tasks in
+[`Justfile`](./Justfile) run selected pre-commit hooks using the script.
 
 ## Project status
 
@@ -56,16 +56,16 @@ The project follows [Semantic Versioning](https://semver.org/).
 
 ## Contributing
 
-Contributions are welcome. Please refer to [`CONTRIBUTE.md`](CONTRIBUTE.md).
+Contributions are welcome. Please refer to [`CONTRIBUTE.md`](./CONTRIBUTE.md).
 
 ## Licensing
 
 This work is licensed under the
 [ISC license](https://en.wikipedia.org/wiki/ISC_license). See
-[`LICENSE`](LICENSE) for the license text.
+[`LICENSE`](./LICENSE) for the license text.
 
 The license is also included in the script
-[`src/filter_pre_commit_hooks.py`](src/filter_pre_commit_hooks.py) itself.
+[`src/filter_pre_commit_hooks.py`](./src/filter_pre_commit_hooks.py) itself.
 
 ## Template
 
