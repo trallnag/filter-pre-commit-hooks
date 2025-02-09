@@ -13,10 +13,12 @@ services:
 
     volumes:
       # Workspace itself.
-      - ..:/workspaces/filter-pre-commit-hooks:cached
+      - ..:/workspace:cached
       # Virtual environment.
-      #- venv:/workspaces/filter-pre-commit-hooks/.venv
+      - venv:/workspace/.venv
+      # Workspace cache.
+      - cache:/workspace/.cache
 
-
-# volumes:
-#   venv: # Virtual environment.
+volumes:
+  venv: # Virtual environment.
+  cache: # Workspace cache.

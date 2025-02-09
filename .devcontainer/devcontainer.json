@@ -1,31 +1,45 @@
 {
   "name": "filter-pre-commit-hooks",
 
-  "workspaceFolder": "/workspaces/filter-pre-commit-hooks",
+  "workspaceFolder": "/workspace",
 
   "dockerComposeFile": "docker-compose.yaml",
 
   "service": "vscode",
 
-  // "customizations": {
-  //   "vscode": {
-  //     "extensions": [
-  //       "EditorConfig.EditorConfig",
-  //       "Tyriar.sort-lines",
-  //       "charliermarsh.ruff",
-  //       "mhutchie.git-graph",
-  //       "ms-python.python",
-  //       "nefrob.vscode-just-syntax",
-  //       "tamasfe.even-better-toml",
-  //       "task.vscode-task",
-  //       "waderyan.gitblame"
-  //     ]
-  //   }
-  // },
-
-  "postCreateCommand": {
-    //"fixVolumeVenv": "sudo chown -R vscode:vscode /workspaces/filter-pre-commit-hooks/.venv"
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "Gerrnperl.outline-map",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "GitHub.vscode-pull-request-github",
+        "Gruntfuggly.todo-tree",
+        "Tyriar.sort-lines",
+        "VisualStudioExptTeam.vscodeintellicode",
+        "charliermarsh.ruff",
+        "donjayamanne.githistory",
+        "github.vscode-github-actions",
+        "mhutchie.git-graph",
+        "mkhl.shfmt",
+        "ms-python.mypy-type-checker",
+        "ms-python.python",
+        "nefrob.vscode-just-syntax",
+        "redhat.vscode-yaml",
+        "tamasfe.even-better-toml",
+        "timonwong.shellcheck",
+        "tomoki1207.selectline-statusbar",
+        "waderyan.gitblame",
+        "yzhang.markdown-all-in-one"
+      ]
+    }
   },
 
-  "postStartCommand": "echo lol"
+  "postCreateCommand": {
+    "fixVolumeVenv": "sudo chown -R vscode:vscode .venv",
+    "fixVolumeCache": "sudo chown -R vscode:vscode .cache"
+  },
+
+  "postStartCommand": "just init"
 }
