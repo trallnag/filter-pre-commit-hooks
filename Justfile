@@ -37,7 +37,7 @@ init:
 # Update dependencies.
 update:
   # Try to update tools managed with Homebrew.
-  ./scripts/update-pkgs-brew.bash just shellcheck shfmt task uv yamlfmt
+  ./scripts/update-pkgs-brew.bash just shellcheck shfmt uv yamlfmt
 
   # Try to update tools managed with uv.
   ./scripts/update-pkgs-uv.bash copier mdformat pre-commit
