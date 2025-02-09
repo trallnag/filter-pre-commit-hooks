@@ -36,6 +36,9 @@ only-include = ["src"]
 
 [tool.ruff]
 
+
+cache-dir = ".cache/ruff"
+
 exclude = [
   "scripts/filter_pre_commit_hooks.py",
   "scripts/exec_cmds_defer_errors.py",
@@ -68,11 +71,17 @@ ignore = [
 
 [tool.mypy]
 
+cache_dir = ".cache/mypy"
+
 disallow_untyped_defs = true
 disallow_any_unimported = true
 no_implicit_optional = true
 check_untyped_defs = true
 warn_unused_ignores = true
+
+[tool.pytest]
+
+cache_dir = ".cache/pytest"
 
 [tool.pytest.ini_options]
 
