@@ -13,6 +13,10 @@ on:
     # At 07:23 on day-of-month 3.
     - cron: 23 7 3 * *
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   dev-cont:
     name: Dev Cont
