@@ -18,11 +18,11 @@
 #
 # /// script
 #
-# requires-python = ">=3.12"
+# requires-python = ">= 3.12"
 #
 # dependencies = [
-#   "click>=8.1.8",
-#   "pyyaml>=6.0.2,<7.0.0",
+#   "click == 8.1.8",
+#   "pyyaml == 6.0.2",
 # ]
 #
 # ///
@@ -36,7 +36,7 @@ from typing import TypedDict, override
 import click
 import yaml
 
-VERSION = "1.1.2"
+VERSION = "2.0.0"
 
 HELP = """
 Filter pre-commit hooks.
