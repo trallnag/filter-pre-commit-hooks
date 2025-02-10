@@ -1,7 +1,7 @@
 name: CI
 
 #
-# Primary workflow for continues integration.
+# The primary workflow for continues integration.
 #
 
 on:
@@ -36,11 +36,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Set up uv
         uses: astral-sh/setup-uv@v5
 
@@ -49,8 +44,10 @@ jobs:
         with:
           python-version-file: pyproject.toml
 
-      - name: Set up pre-commit
-        run: uv tool install pre-commit
+      - name: Install tools with uv
+        run: >-
+          uv tool install mdformat
+          && uv tool install pre-commit
 
       - name: Cache pre-Commit cache
         uses: actions/cache@v4
@@ -61,14 +58,25 @@ jobs:
           restore-keys: |
             pre-commit cache dir
 
-      - name: Run task init-uv
-        run: task init-uv
+      - name: Install tools with mise
+        uses: jdx/mise-action@v2
+        with:
+          install: true
+          cache: true
+          tool_versions: |
+            just latest
+            shellcheck latest
+            shfmt latest
+            yamlfmt latest
 
-      - name: Run task format
-        run: task format
+      - name: Run recipe init
+        run: just init
 
-      - name: Run task lint
-        run: task lint
+      - name: Run recipe fix
+        run: just fix
+
+      - name: Run recipe check
+        run: just check
 
       - name: Commit and push changes
         if: |
@@ -131,11 +139,8 @@ jobs:
         with:
           python-version: ${{ steps.python-version.outputs.value }}
 
-      - name: Run task init-uv
-        run: task init-uv
-
-      - name: Run task test
-        run: task test
+      - name: Run recipe test
+        run: just test
 
   keep-enabled:
     name: Keep Enabled
