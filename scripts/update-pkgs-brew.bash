@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+#
+# This script updates the given Homebrew formulae.
+#
+
 set -euo pipefail
 
 if command -v brew &> /dev/null; then

@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+#
+# This script runs pre-commit hooks that are tagged with "check" and "task".
+#
+
 set -euo pipefail
 
 declare -x SKIP
