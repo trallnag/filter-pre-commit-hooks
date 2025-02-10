@@ -1,7 +1,7 @@
 name: Release
 
 #
-# Releases a new version of this project.
+# This workflow releases a new version of this project.
 #
 # Make sure to prepare project for a new release (see docs for more).
 #
@@ -29,14 +29,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v5
-
       - name: Determine release-version
         id: release-version
         run: |
@@ -49,12 +41,15 @@ jobs:
           value="${{ steps.release-version.outputs.value }} / $(date +%Y-%m-%d)"
           echo "value=$value" | tee -a $GITHUB_OUTPUT
 
-      - name: Run task create-notes
-        run: task create-notes
+      - name: Install mdformat
+        uses: pipx install mdformat
+
+      - name: Create release notes
+        run: ./scripts/create-release-notes.bash
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
           name: ${{ steps.release-name.outputs.value }}
-          body_path: tmp/release.md
+          body_path: tmp/release-notes.md
           draft: true
