@@ -72,6 +72,14 @@ repos:
 
   - repo: local
     hooks:
+      - id: sync-script-metadata
+        alias: sync-script-metadata (fix, task)
+        name: Sync script metadata
+        language: script
+        pass_filenames: false
+        entry: scripts/sync-script-metadata.bash
+        files: ^pyproject\.toml$
+
       - id: yamlfmt
         alias: yamlfmt (fix, task)
         name: Format YAML files with yamlfmt
