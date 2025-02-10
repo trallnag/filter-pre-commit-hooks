@@ -41,8 +41,8 @@ Commit the changes. Make sure to sign the commit:
 
 ```sh
 git add .
-git commit -S -m "chore: Prepare release v$VERSION"
-git log --show-signature -1
+git commit --gpg-sign --message="chore: Prepare release v$VERSION"
+git log --show-signature --max-count=1
 ```
 
 Push changes:
@@ -58,14 +58,14 @@ in GitHub Actions and ensure everything is fine.
 Tag the latest commit with an annotated and signed tag:
 
 ```sh
-git tag -s v$VERSION -m ""
+git tag --sign --message="" v$VERSION
 git show v$VERSION
 ```
 
 Make sure that the tree looks good:
 
 ```sh
-git log --graph --oneline --all -n 5
+git log --graph --oneline --all --max-count=5
 ```
 
 Push the tag itself:
