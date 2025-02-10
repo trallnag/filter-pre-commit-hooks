@@ -89,7 +89,3 @@ check--mypy:
 # Test project with pytest
 test:
   uv run pytest --cov-report=term-missing:skip-covered --cov=src
-
-# Create notes for latest release.
-create-notes:
-  ./scripts/create-release-notes.bash
