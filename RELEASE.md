@@ -7,7 +7,7 @@ This document describes the release process and is targeted at maintainers.
 Check the existing tags:
 
 ```sh
-git tag
+git tag --list --sort=taggerdate 'v*' | tail --lines=5
 ```
 
 Pick a name for the new release. It must follow
