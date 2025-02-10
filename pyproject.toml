@@ -89,3 +89,15 @@ cache_dir = ".cache/pytest"
 pythonpath = [
   "src"
 ]
+
+[tool.coverage.run]
+
+branch = true
+
+source = [
+  "src",
+]
+
+omit = [
+  "tests/*",
+]

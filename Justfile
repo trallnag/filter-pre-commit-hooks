@@ -88,4 +88,4 @@ check--mypy:
 
 # Test project with pytest
 test:
-  uv run pytest --cov-report=term-missing:skip-covered --cov=src
+  uv run pytest --cov --cov-report=term-missing:skip-covered
