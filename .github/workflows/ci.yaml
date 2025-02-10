@@ -82,7 +82,7 @@ jobs:
         run: just check
 
       - name: Remove mise file
-        if: !cancelled()
+        if: cancelled() == false
         run: rm -f .tool-versions
 
       - name: Commit and push changes
