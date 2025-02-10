@@ -81,6 +81,10 @@ jobs:
       - name: Run recipe check
         run: just check
 
+      - name: Remove mise file
+        if: !cancelled()
+        run: rm -f .tool-versions
+
       - name: Commit and push changes
         if: |
           cancelled() == false &&
