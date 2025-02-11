@@ -1,7 +1,7 @@
 {
   "name": "filter-pre-commit-hooks",
 
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": "/workspaces/filter-pre-commit-hooks",
 
   "dockerComposeFile": "docker-compose.yaml",
 
