@@ -36,7 +36,6 @@ only-include = ["src"]
 
 [tool.ruff]
 
-
 cache-dir = ".cache/ruff"
 
 exclude = [
