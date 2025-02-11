@@ -2,10 +2,11 @@
 Integration tests for the `filter_pre_commit_hooks` module.
 """
 
+import click
 import pytest
 from click.testing import CliRunner
 
-from src.filter_pre_commit_hooks import filter_pre_commit_hooks
+from src.filter_pre_commit_hooks import Command, filter_pre_commit_hooks
 
 
 @pytest.mark.parametrize(
@@ -93,3 +94,17 @@ def test_cli_help() -> None:
     result = CliRunner().invoke(filter_pre_commit_hooks, ["--help"])
 
     assert result.exit_code == 0
+
+
+def test_command() -> None:
+    """
+    Test that the custom command handles missing epilog.
+    """
+
+    @click.command(
+        cls=Command,
+    )
+    def command() -> None:
+        pass
+
+    CliRunner().invoke(command, ["--help"])

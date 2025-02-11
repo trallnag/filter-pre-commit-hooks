@@ -171,11 +171,10 @@ def is_hook_filtered(
             filtered = all(f in tags for f in filters)
         else:
             filtered = any(f in tags for f in filters)
-    elif target == Target.ID:
-        if mode == Mode.ALL_OF:
-            filtered = all(f == hook["id"] for f in filters)
-        else:
-            filtered = any(f == hook["id"] for f in filters)
+    elif mode == Mode.ALL_OF:
+        filtered = all(f == hook["id"] for f in filters)
+    else:
+        filtered = any(f == hook["id"] for f in filters)
 
     return not filtered if orient == Orient.INVERT else filtered
 
