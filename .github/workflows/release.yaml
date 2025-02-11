@@ -42,7 +42,7 @@ jobs:
           echo "value=$value" | tee -a $GITHUB_OUTPUT
 
       - name: Install mdformat
-        uses: pipx install mdformat
+        run: pipx install mdformat
 
       - name: Create release notes
         run: ./scripts/create-release-notes.bash
