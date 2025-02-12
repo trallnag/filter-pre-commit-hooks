@@ -9,6 +9,28 @@ from click.testing import CliRunner
 from src.filter_pre_commit_hooks import Command, filter_pre_commit_hooks
 
 
+def test_cli_help() -> None:
+    """Test the CLI help message."""
+
+    result = CliRunner().invoke(filter_pre_commit_hooks, ["--help"])
+
+    assert result.exit_code == 0
+
+
+def test_command() -> None:
+    """
+    Test that the custom command handles missing epilog.
+    """
+
+    @click.command(
+        cls=Command,
+    )
+    def command() -> None:
+        pass
+
+    CliRunner().invoke(command, ["--help"])
+
+
 @pytest.mark.parametrize(
     ("extra_args", "expected"),
     [
@@ -86,25 +108,3 @@ def test_cli(extra_args: list[str], expected: str) -> None:
 
     assert result.output == expected
     assert result.exit_code == 0
-
-
-def test_cli_help() -> None:
-    """Test the CLI help message."""
-
-    result = CliRunner().invoke(filter_pre_commit_hooks, ["--help"])
-
-    assert result.exit_code == 0
-
-
-def test_command() -> None:
-    """
-    Test that the custom command handles missing epilog.
-    """
-
-    @click.command(
-        cls=Command,
-    )
-    def command() -> None:
-        pass
-
-    CliRunner().invoke(command, ["--help"])
