@@ -17,6 +17,7 @@
           }
         }
       },
+
       "extensions": [
         "EditorConfig.EditorConfig",
         "Gerrnperl.outline-map",
