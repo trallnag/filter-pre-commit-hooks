@@ -86,7 +86,7 @@ cache_dir = ".cache/pytest"
 [tool.pytest.ini_options]
 
 pythonpath = [
-  "src"
+  "src",
 ]
 
 [tool.coverage.run]
