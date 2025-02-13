@@ -21,11 +21,12 @@ following example, it is used to run all hooks that are tagged with `fix` and
 SKIP=$(uv run --script filter_pre_commit_hooks.py fix task) pre-commit run -a
 ```
 
-Note that in the example the script is executed with `uv run`. A subcommand of
+Note that in the example the script is executed with `uv run`, a subcommand of
 [uv](https://docs.astral.sh/), which is a package manager for Python. This is
 because the script contains
 [inline script metadata](https://packaging.python.org/en/latest/specifications/inline-script-metadata/#inline-script-metadata)
-specifying required dependencies.
+specifying required dependencies. The script also contains a shebang, so it can
+be executed directly.
 
 Tags are extracted from the "alias" field of every hook. Tags are declared by
 putting them into parenthesis at the end of the respective alias. Individual

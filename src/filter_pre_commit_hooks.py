@@ -48,7 +48,12 @@ that only a subset of hooks is executed when running pre-commit.
 Here it is used to run all hooks that are tagged with "fix" and "task":
 
 \b
-SKIP=$(filter_pre_commit_hooks.py fix task) pre-commit run -a
+SKIP=$(uv run --script filter_pre_commit_hooks.py fix task) pre-commit run -a
+
+Note that in the example the script is executed with "uv run", a subcommand of
+uv, which is a package manager for Python. This is because the script contains
+inline script metadata specifying required dependencies. The script also
+contains a shebang, so it can be executed directly.
 
 Tags are extracted from the "alias" field of every hook. Tags are declared by
 putting them into parenthesis at the end of the respective alias. Individual
