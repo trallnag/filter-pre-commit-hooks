@@ -1,3 +1,5 @@
+set dotenv-load
+
 set shell := [
   "bash",
   "-o", "errexit", "-o", "nounset", "-o", "pipefail",
@@ -89,3 +91,8 @@ check--mypy:
 # Test project with pytest
 test:
   uv run pytest --cov --cov-report=term-missing:skip-covered
+
+# Sync dependencies from project config to script inline metadata.
+[group('misc')]
+sync-script-metadata:
+  ./scripts/sync-script-metadata.bash src/$SCRIPT_NAME.py
