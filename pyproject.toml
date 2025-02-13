@@ -85,18 +85,12 @@ cache_dir = ".cache/pytest"
 
 [tool.pytest.ini_options]
 
-pythonpath = [
-  "src",
-]
+pythonpath = ["src"]
 
 [tool.coverage.run]
 
 branch = true
 
-source = [
-  "src",
-]
+source = ["src"]
 
-omit = [
-  "tests/*",
-]
+omit = ["tests/*"]
