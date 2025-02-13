@@ -157,12 +157,12 @@ def test_hook_is_filtered(  # noqa: PLR0913
     ("hooks", "output_format", "expected"),
     [
         pytest.param(
+            id="comma_separated",
             *[
                 {"hook1", "hook2", "hook3"},
                 Format.COMMA,
                 "hook1, hook2, hook3",
             ],
-            id="comma_separated",
         ),
         pytest.param(
             id="newline_separated",
