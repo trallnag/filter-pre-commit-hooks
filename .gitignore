@@ -1,7 +1,6 @@
 .cache/
 .coverage
 .local/
-.venv/
 .vscode/
 tmp/
 
@@ -12,3 +11,4 @@ tmp/
 **/__pycache__/
 *.egg-info/
 *.pyc
+.venv/
