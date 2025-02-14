@@ -50,7 +50,12 @@ update:
   uv sync --upgrade --all-extras --dev
 
 # Run recipes that fix stuff.
-fix: fix--pre-commit fix--mdformat fix--shfmt fix--ruff
+fix:
+  ./scripts/exec_cmds_defer_errors.py \
+    "just fix--pre-commit" \
+    "just fix--mdformat" \
+    "just fix--shfmt" \
+    "just fix--ruff"
 
 # Run pre-commit hooks that fix stuff.
 fix--pre-commit:
@@ -66,11 +71,16 @@ fix--shfmt:
 
 # Fix Python files with Ruff.
 fix--ruff:
-  uv run ruff format
-  uv run ruff check --fix-only
+  uv run --quiet ruff format
+  uv run --quiet ruff check --fix-only
 
 # Run recipes that check stuff.
-check: check--pre-commit check--shellcheck check--ruff check--mypy
+check:
+  ./scripts/exec_cmds_defer_errors.py \
+    "just check--pre-commit" \
+    "just check--shellcheck" \
+    "just check--ruff" \
+    "just check--mypy"
 
 # Run pre-commit hooks that check stuff.
 check--pre-commit:
@@ -82,15 +92,15 @@ check--shellcheck:
 
 # Lint Python files with Ruff.
 check--ruff:
-  uv run ruff check --no-fix
+  uv run --quiet ruff check --no-fix
 
 # Lint Python files with mypy.
 check--mypy:
-  uv run dmypy run --timeout 3600 src tests
+  uv run --quiet dmypy run --timeout 3600 src tests
 
 # Test project with pytest
 test:
-  uv run pytest --cov --cov-report=term-missing:skip-covered
+  uv run --quiet pytest --cov --cov-report=term-missing:skip-covered
 
 # Sync dependencies from project config to script inline metadata.
 [group('misc')]
