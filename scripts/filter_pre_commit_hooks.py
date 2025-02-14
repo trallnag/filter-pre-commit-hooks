@@ -1,4 +1,5 @@
 #!/usr/bin/env -S uv run --script
+
 #
 # This work is available under the ISC license.
 #
@@ -36,7 +37,7 @@ from typing import TypedDict, override
 import click
 import yaml
 
-VERSION = "2.0.0"
+VERSION = "2.0.1"
 
 HELP = """
 Filter pre-commit hooks.
@@ -47,7 +48,12 @@ that only a subset of hooks is executed when running pre-commit.
 Here it is used to run all hooks that are tagged with "fix" and "task":
 
 \b
-SKIP=$(filter_pre_commit_hooks.py fix task) pre-commit run -a
+SKIP=$(uv run --script filter_pre_commit_hooks.py fix task) pre-commit run -a
+
+Note that in the example the script is executed with "uv run", a subcommand of
+uv, which is a package manager for Python. This is because the script contains
+inline script metadata specifying required dependencies. The script also
+contains a shebang, so it can be executed directly.
 
 Tags are extracted from the "alias" field of every hook. Tags are declared by
 putting them into parenthesis at the end of the respective alias. Individual
@@ -171,11 +177,10 @@ def is_hook_filtered(
             filtered = all(f in tags for f in filters)
         else:
             filtered = any(f in tags for f in filters)
-    elif target == Target.ID:
-        if mode == Mode.ALL_OF:
-            filtered = all(f == hook["id"] for f in filters)
-        else:
-            filtered = any(f == hook["id"] for f in filters)
+    elif mode == Mode.ALL_OF:
+        filtered = all(f == hook["id"] for f in filters)
+    else:
+        filtered = any(f == hook["id"] for f in filters)
 
     return not filtered if orient == Orient.INVERT else filtered
 

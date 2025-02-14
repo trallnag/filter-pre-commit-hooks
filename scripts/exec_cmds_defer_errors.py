@@ -1,8 +1,5 @@
 #!/usr/bin/env -S uv run --script
-#
-# /// script
-# requires-python = ">=3.10"
-# ///
+
 #
 # This work is available under the ISC license.
 #
@@ -20,18 +17,54 @@
 # OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 # PERFORMANCE OF THIS SOFTWARE.
 #
+# /// script
+#
+# requires-python = ">= 3.12"
+#
+# dependencies = [
+#   "click == 8.1.8",
+# ]
+#
+# ///
+#
 
 import subprocess
 import sys
-from argparse import ArgumentParser
 from dataclasses import dataclass
+from typing import override
 
-VERSION = "1.0.1"
+import click
 
-ANSI_RED = "\033[31m"
-ANSI_GREEN = "\033[32m"
-ANSI_BLUE = "\033[34m"
-ANSI_RESET = "\033[0m"
+VERSION = "2.0.0"
+
+HELP = """
+Execute commands and defer errors.
+
+Here it is used to run three commands:
+
+\b
+uv run --script exec_cmds_defer_errors.py "echo hi" "exit 1" "echo world"
+
+Every command is executed in its own shell.
+"""
+
+EPILOG = """
+\b
+For more information, check out
+<https://github.com/trallnag/filter-pre-commit-hooks>.
+"""
+
+
+class Command(click.Command):
+    """Custom command. Only used to customize the epilog formatting."""
+
+    @override
+    def format_epilog(self, ctx: click.Context, formatter: click.HelpFormatter) -> None:
+        """Format the epilog. Just like the original, but without indentation."""
+
+        if self.epilog:
+            formatter.write_paragraph()
+            formatter.write_text(self.epilog)
 
 
 @dataclass
@@ -39,69 +72,51 @@ class CmdExecErrorInfo:
     """Information about a command execution error."""
 
     cmd_index: int
+    """Index of the command."""
+
     cmd_short: str
+    """Shortened version of the command."""
+
     exit_code: int
+    """Exit code of the command."""
 
 
-parser = ArgumentParser(
-    description=(
-        "Executes given commands and defers errors until all commands have "
-        "been executed. Once all commands have been executed, a short summary "
-        "is printed."
-    ),
-    epilog=(
-        "For more information, check out "
-        "<https://github.com/trallnag/exec-cmds-defer-errors>."
-    ),
+@click.command(
+    cls=Command,
+    context_settings={
+        "help_option_names": ["-h", "--help"],
+        "show_default": True,
+    },
+    help=HELP,
+    epilog=EPILOG,
 )
-
-parser.add_argument(
-    "-v",
-    "--version",
-    action="version",
-    version=f"%(prog)s {VERSION}",
-)
-
-parser.add_argument(
-    "commands",
-    nargs="+",
-    help=("Commands to execute. Every command is executed in its own shell."),
-)
-
-
-if __name__ == "__main__":
-    args = parser.parse_args()
-
-    commands: list[str] = args.commands
-
-    if not all(commands):
-        parser.error("All given commands must be non-empty strings.")
+@click.argument("cmds", nargs=-1)
+@click.version_option(VERSION)
+def exec_cmds_defer_errors(cmds: list[str]) -> None:
+    """Execute commands and defer errors."""
 
     cmd_exec_errors: list[CmdExecErrorInfo] = []
 
-    for index, command in enumerate(commands):
-        print(f"{ANSI_BLUE}Executing command {index + 1}{ANSI_RESET}...")
-        print(f"{ANSI_BLUE}{command.strip()}{ANSI_RESET}")
+    for index, cmd in enumerate(cmds):
+        click.secho(f"Executing command {index + 1}...", fg="blue")
+        click.secho(cmd.strip(), fg="blue")
 
         # Rule S602 disabled as running arbitrary code in shell is intended here.
-        completed_process = subprocess.run(command, shell=True, check=False)  # noqa: S602
-        if completed_process.returncode == 0:
-            print(
-                f"{ANSI_GREEN}Executed command {index + 1} "
-                f"successfully.{ANSI_RESET}"
-            )
+        completed_proc = subprocess.run(cmd, shell=True, check=False)  # noqa: S602
+
+        if completed_proc.returncode == 0:
+            click.secho(f"Executed command {index + 1} successfully.", fg="green")
         else:
-            print(
-                f"{ANSI_RED}Executed command {index + 1} "
-                f"failed with exit code {completed_process.returncode}.{ANSI_RESET}"
+            click.secho(
+                (
+                    f"Executed command {index + 1} failed "
+                    f"with exit code {completed_proc.returncode}."
+                ),
+                fg="red",
             )
 
             cut_off_limit = 30
-            cmd_short = (
-                f"{command[:cut_off_limit]}..."
-                if len(command) > cut_off_limit
-                else command
-            )
+            cmd_short = f"{cmd[:cut_off_limit]}..." if len(cmd) > cut_off_limit else cmd
 
             cmd_short = cmd_short.replace("\r\n", " ").replace("\n", " ")
 
@@ -109,28 +124,34 @@ if __name__ == "__main__":
                 CmdExecErrorInfo(
                     cmd_index=index + 1,
                     cmd_short=cmd_short,
-                    exit_code=completed_process.returncode,
+                    exit_code=completed_proc.returncode,
                 )
             )
 
     if not cmd_exec_errors:
-        print(
-            f"{ANSI_GREEN}All {len(commands)} commands "
-            f"executed successfully.{ANSI_RESET}"
+        click.secho(
+            f"All {len(cmds)} commands executed successfully.",
+            fg="green",
         )
 
         sys.exit(0)
     else:
-        print(
-            f"{ANSI_RED}{len(cmd_exec_errors)} out of "
-            f"{len(commands)} command(s) failed.{ANSI_RESET}"
+        click.secho(
+            f"{len(cmd_exec_errors)} out of {len(cmds)} command(s) failed.", fg="red"
         )
 
         for cmd_exec_error in cmd_exec_errors:
-            print(
-                f"{ANSI_RED}Command {cmd_exec_error.cmd_index} "
-                f"failed with exit code {cmd_exec_error.exit_code}: "
-                f"{cmd_exec_error.cmd_short}{ANSI_RESET}"
+            click.secho(
+                (
+                    f"Command {cmd_exec_error.cmd_index} failed "
+                    f"with exit code {cmd_exec_error.exit_code}: "
+                    f"{cmd_exec_error.cmd_short}"
+                ),
+                fg="red",
             )
 
         sys.exit(1)
+
+
+if __name__ == "__main__":
+    exec_cmds_defer_errors()
