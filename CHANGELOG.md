@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0).
 
 ## Unreleased
 
+Nothing.
+
+## [2.0.1](https://github.com/trallnag/filter-pre-commit-hooks/compare/v2.0.0...v2.0.1) / 2025-02-14
+
 ### Changed
 
 - Added info about uv and shebang to script help message.
