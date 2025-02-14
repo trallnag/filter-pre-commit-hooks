@@ -12,10 +12,11 @@
       "settings": {
         "terminal.integrated.defaultProfile.linux": "zsh",
         "terminal.integrated.profiles.linux": {
-          "zsh": {
-            "path": "/usr/bin/zsh"
-          }
-        }
+          "zsh": { "path": "/usr/bin/zsh" }
+        },
+        "python.testing.pytestArgs": ["tests"],
+        "python.testing.unittestEnabled": false,
+        "python.testing.pytestEnabled": true
       },
 
       "extensions": [
