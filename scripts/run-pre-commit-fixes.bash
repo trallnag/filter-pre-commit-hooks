@@ -7,7 +7,7 @@
 # something really wrong and not just a successful fix.
 #
 
-set -xeuo pipefail
+set -euo pipefail
 
 declare -x SKIP
 
