@@ -29,10 +29,13 @@ RUN <<-EOT
 
   bash -c "$(curl --location --silent --show-error --fail $installer)"
 
-  echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' \
-    | tee --append \
-      /home/vscode/.bashrc \
-      /home/vscode/.zshrc
+  brew_shellenv='eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
+
+  echo "$brew_shellenv" | tee --append /home/vscode/.bashrc
+
+  echo "$brew_shellenv" \
+    | cat - /home/vscode/.zshrc > /tmp/zshrc \
+      && mv /tmp/zshrc /home/vscode/.zshrc
 EOT
 
 # Install tools with Homebrew.
