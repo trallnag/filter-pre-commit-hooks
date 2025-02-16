@@ -15,6 +15,9 @@ The development environment should have the following tools:
 - [Uv](https://docs.astral.sh/uv/) for managing Python and friends.
 - Unix-like. Not required by itself, but assumed as the standard.
 
+Technically, uv by itself is already enough to work on the project. The other
+stuff is just extra and can also be handled by GitHub Actions.
+
 Common tasks like initialization and runnings tests are covered by and
 documented in [`Justfile`](./Justfile). To run a complete suite of tasks, just
 invoke `just` without arguments.
