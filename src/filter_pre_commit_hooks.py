@@ -1,4 +1,4 @@
-#!/usr/bin/env -S uv run --script
+#!/usr/bin/env -S uv run -s
 
 #
 # This work is available under the ISC license.
@@ -40,20 +40,30 @@ import yaml
 VERSION = "2.0.1"
 
 HELP = """
-Filter pre-commit hooks.
+Extract and filter pre-commit hooks.
 
-The script output can be used to populate the SKIP environment variable, so
-that only a subset of hooks is executed when running pre-commit.
+The output of the program can be used to populate the "SKIP" environment
+variable, so that pre-commit only executes a subset of all defined hooks.
 
-Here it is used to run all hooks that are tagged with "fix" and "task":
+The program is available as the script "filter_pre_commit_hooks.py" and as the
+package "filter-pre-commit-hooks" on PyPI.
+
+By default, the program returns all hooks that have the given tags. In the
+following example, all pre-commit hooks that are tagged with "fix" and "task"
+are executed (tagging is described further below):
 
 \b
-SKIP=$(uv run --script filter_pre_commit_hooks.py fix task) pre-commit run -a
+SKIP=$(uv run -s filter_pre_commit_hooks.py fix task) pre-commit run -a
 
-Note that in the example the script is executed with "uv run", a subcommand of
-uv, which is a package manager for Python. This is because the script contains
-inline script metadata specifying required dependencies. The script also
-contains a shebang, so it can be executed directly.
+The program itself is executed with "uv run", a subcommand of uv, which is a
+package manager for Python. This is because the script contains inline script
+metadata specifying required dependencies. The script also contains a shebang,
+so it can be executed directly.
+
+Using the package from PyPI, the equivalent command looks like this:
+
+\b
+SKIP=$(filter-pre-commit-hooks fix task) pre-commit run -a
 
 Tags are extracted from the "alias" field of every hook. Tags are declared by
 putting them into parenthesis at the end of the respective alias. Individual
@@ -63,14 +73,13 @@ tags are separated by commas. Here are two exemplary aliases:
 - forbid-new-submodules (check, task)
 - mixed-line-ending (fix, task)
 
-Options can be passed to change the behavior of the script. For example, to
+Options can be passed to change the behavior of the program. For example, to
 filter hooks by their identifier instead of their tags.
 """
 
 EPILOG = """
 \b
-For more information, check out
-<https://github.com/trallnag/filter-pre-commit-hooks>.
+Project homepage: <https://github.com/trallnag/filter-pre-commit-hooks>.
 """
 
 

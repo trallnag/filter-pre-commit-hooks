@@ -7,7 +7,10 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0).
 
 ## Unreleased
 
-Nothing.
+### Changed
+
+- Program is now also available as a package on PyPI. Installed from PyPI, the
+  program can be executed with `filter-pre-commit-hooks`.
 
 ## [2.0.1](https://github.com/trallnag/filter-pre-commit-hooks/compare/v2.0.0...v2.0.1) / 2025-02-14
 

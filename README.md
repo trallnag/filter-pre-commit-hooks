@@ -5,28 +5,37 @@
 
 # `filter_pre_commit_hooks.py`
 
-Small Python script that extracts and filters
-[pre-commit](https://pre-commit.com/) hooks so that only a subset can be run by
-pre-commit. Why is such a script helpful? Pre-commit only provides a way to skip
+Small Python program that extracts and filters
+[pre-commit](https://pre-commit.com/) hooks so that only a subset of them can be
+executed. Why is such a program helpful? Pre-commit only provides a way to skip
 hooks. There is no way to explicitly state which hooks should be run.
 
-The standalone script is called `filter_pre_commit_hooks.py` and can be found
-[here](./src/filter_pre_commit_hooks.py). The license is included in the file.
+The program is available in this repository as the script
+[`filter_pre_commit_hooks.py`](./src/filter_pre_commit_hooks.py) and as the
+package
+[filter-pre-commit-hooks](https://pypi.org/project/filter-pre-commit-hooks/) on
+PyPI.
 
-By default, the script returns all hooks that are tagged as required. In the
-following example, it is used to run all hooks that are tagged with `fix` and
-`task`:
+By default, the program returns all hooks that have the given tags. In the
+following example, all pre-commit hooks that are tagged with `fix` and `task`
+are executed (tagging is described further below):
 
 ```sh
-SKIP=$(uv run --script filter_pre_commit_hooks.py fix task) pre-commit run -a
+SKIP=$(uv run -s filter_pre_commit_hooks.py fix task) pre-commit run -a
 ```
 
-Note that in the example the script is executed with `uv run`, a subcommand of
+The program itself is executed with `uv run`, a subcommand of
 [uv](https://docs.astral.sh/), which is a package manager for Python. This is
 because the script contains
 [inline script metadata](https://packaging.python.org/en/latest/specifications/inline-script-metadata/#inline-script-metadata)
 specifying required dependencies. The script also contains a shebang, so it can
 be executed directly.
+
+Using the package from PyPI, the equivalent command looks like this:
+
+```sh
+SKIP=$(filter-pre-commit-hooks fix task) pre-commit run -a
+```
 
 Tags are extracted from the "alias" field of every hook. Tags are declared by
 putting them into parenthesis at the end of the respective alias. Individual
