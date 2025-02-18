@@ -1,14 +1,14 @@
 .cache/
-.coverage
 .local/
+.tmp/
 .vscode/
-tmp/
-
-# Mypy.
-.dmypy.json
 
 # Python.
 **/__pycache__/
 *.egg-info/
 *.pyc
+.coverage
 .venv/
+
+# Mypy.
+.dmypy.json

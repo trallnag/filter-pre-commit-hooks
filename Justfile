@@ -13,10 +13,14 @@ default: init fix check test
 # Initialize environment.
 init:
   # Create local-only directories.
-  mkdir -p .cache .local .venv tmp \
+  mkdir -p \
+    .cache \
     .cache/mypy \
     .cache/pytest \
-    .cache/ruff
+    .cache/ruff \
+    .local \
+    .tmp \
+    .venv
 
   # Check tool availability.
   mdformat --version
