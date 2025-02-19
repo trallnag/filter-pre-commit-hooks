@@ -3,7 +3,7 @@
 [![ci](https://img.shields.io/github/actions/workflow/status/trallnag/filter-pre-commit-hooks/ci.yaml?label=ci)](https://github.com/trallnag/filter-pre-commit-hooks/actions/workflows/ci.yaml)
 [![release](https://img.shields.io/github/actions/workflow/status/trallnag/filter-pre-commit-hooks/release.yaml?label=release)](https://github.com/trallnag/filter-pre-commit-hooks/actions/workflows/release.yaml)
 
-# Filter-pre-commit-hooks
+# Filter-Pre-Commit-Hooks
 
 Small Python program that extracts and filters
 [pre-commit](https://pre-commit.com/) hooks so that only a subset of them can be
@@ -57,8 +57,8 @@ A valid config used with the script can be found in
 
 ## Project status
 
-The project is maintained by me, [trallnag](https://github.com/trallnag), and I
-am interested in keeping it alive as I am actively using it.
+The project is maintained by me, [Tim](https://github.com/trallnag), and I am
+interested in keeping it alive as I am actively using it.
 
 I'm also using the project to test out various tools and workflows.
 
