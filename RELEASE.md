@@ -76,8 +76,8 @@ git push origin v$VERSION
 
 This triggers the release workflow which will build package distributions,
 publish them to PyPI, and draft a GitHub release. Monitor the
-[release workflow run](https://github.com/trallnag/filter-pre-commit-hooks/actions/workflows/release.yaml)
-and check the
+[release workflow](https://github.com/trallnag/filter-pre-commit-hooks/actions/workflows/release.yaml)
+run and check the
 [project on PyPI](https://pypi.org/project/filter-pre-commit-hooks/).
 
 ## Wrap up
