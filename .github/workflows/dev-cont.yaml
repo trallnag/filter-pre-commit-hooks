@@ -10,8 +10,8 @@ on:
     paths:
       - .devcontainer/**
   schedule:
-    # At 07:23 on day-of-month 3.
-    - cron: 23 7 3 * *
+    # At 04:25 on Monday.
+    - cron: 25 4 * * 1
 
 defaults:
   run:
