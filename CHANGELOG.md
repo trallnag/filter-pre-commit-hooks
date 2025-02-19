@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0).
 
 ## Unreleased
 
+Nothing.
+
+## [2.0.2](https://github.com/trallnag/filter-pre-commit-hooks/compare/v2.0.1...v2.0.2) / 2025-02-19
+
 ### Changed
 
 - Program is now also available as a package on PyPI. Installed from PyPI, the
