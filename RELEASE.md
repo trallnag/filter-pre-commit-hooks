@@ -26,7 +26,7 @@ sed -i "s/^VERSION = \".*\"/VERSION = \"$VERSION\"/" src/filter_pre_commit_hooks
 uv sync
 ```
 
-Now make sure that [`CHANGELOG.md`](./CHANGELOG.md) is up-to-date.
+Make sure that [`CHANGELOG.md`](./CHANGELOG.md) is up-to-date.
 
 Adjust entries in the changelog for example by adding additional examples or
 highlighting breaking changes.
@@ -74,13 +74,15 @@ Push the tag itself:
 git push origin v$VERSION
 ```
 
-This triggers the release workflow which will build binaries, build and push
-container images, and draft a GitHub release. Monitor the
-[release workflow run](https://github.com/trallnag/filter-pre-commit-hooks/actions/workflows/release.yaml).
+This triggers the release workflow which will build package distributions,
+publish them to PyPI, and draft a GitHub release. Monitor the
+[release workflow run](https://github.com/trallnag/filter-pre-commit-hooks/actions/workflows/release.yaml)
+and check the
+[project on PyPI](https://pypi.org/project/filter-pre-commit-hooks/).
 
 ## Wrap up
 
-Go to the release page of this project on GitHub
+If everything is fine, go to the release page of this project on GitHub
 [here](https://github.com/trallnag/filter-pre-commit-hooks/releases) and review
 the automatically created release draft.
 
