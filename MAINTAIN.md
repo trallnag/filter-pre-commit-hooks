@@ -8,16 +8,13 @@ maintenance tasks and processes.
 Check here: <https://devguide.python.org/versions/>.
 
 Consider raising the lowest supported Python version. Adjustments must be made
-in the following files:
+in the [`pyproject.toml`](./pyproject.toml).
 
-- [`pyproject.toml`](./pyproject.toml)
-- [`src/filter_pre_commit_hooks.py`](./src/filter_pre_commit_hooks.py)
-
-Afterwards, update the dependencies of the script.
+Afterwards, update the dependencies of the program.
 
 ## Bump dependency versions in `pyproject.toml`
 
-Raise the lowest supported versions of the dependencies in the file
+Raise the supported versions of the dependencies in the file
 [`pyproject.toml`](./pyproject.toml). The versions should be compatible with
 each other.
 

@@ -76,7 +76,7 @@ ignore = [
   "COM812",  # Redundant rule. Ruff recommends disabling it.
   "D100",    # Missing docstring in public module is fine.
   "D104",    # Missing docstring in public package is fine.
-  "D200",    # One-line docstring on seperate line is fine.
+  "D200",    # One-line docstring on separate line is fine.
   "D202",    # Blank line after docstring is preferred.
   "D203",    # Blank line before docstring not required.
   "D205",    # Blank line between summary and desc not required.
