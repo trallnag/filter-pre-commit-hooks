@@ -110,4 +110,4 @@ test:
 # Sync dependencies from project config to script inline metadata.
 [group('misc')]
 sync-script-metadata:
-  ./scripts/sync-script-metadata.bash src/$SCRIPT_NAME.py
+  ./scripts/sync-script-metadata.bash src/$SCRIPT_NAME/$SCRIPT_NAME.py

@@ -4,7 +4,7 @@ Unit tests for the `filter_pre_commit_hooks` module.
 
 import pytest
 
-from src.filter_pre_commit_hooks import (
+from filter_pre_commit_hooks.filter_pre_commit_hooks import (
     Format,
     Hook,
     Mode,

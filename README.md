@@ -11,8 +11,8 @@ executed. Why is such a program helpful? Pre-commit only provides a way to skip
 hooks. There is no way to explicitly state which hooks should be run.
 
 The program is available in this repository as the script
-[`filter_pre_commit_hooks.py`](./src/filter_pre_commit_hooks.py) and as the
-package
+[`filter_pre_commit_hooks.py`](./src/filter_pre_commit_hooks/filter_pre_commit_hooks.py)
+and as the package
 [filter-pre-commit-hooks](https://pypi.org/project/filter-pre-commit-hooks/) on
 PyPI.
 

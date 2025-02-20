@@ -8,7 +8,10 @@ import click
 import pytest
 from click.testing import CliRunner
 
-from src.filter_pre_commit_hooks import Command, filter_pre_commit_hooks
+from filter_pre_commit_hooks.filter_pre_commit_hooks import (
+    Command,
+    filter_pre_commit_hooks,
+)
 
 
 def test_cli_help() -> None:

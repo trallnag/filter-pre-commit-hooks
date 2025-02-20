@@ -35,7 +35,7 @@ Changelog = "https://github.com/trallnag/filter-pre-commit-hooks/blob/master/CHA
 
 # Note that before building package distributions, the prefix "_" must be
 # removed. It is here to avoid conflicts with globally installed packages.
-_filter-pre-commit-hooks = "src.filter_pre_commit_hooks:filter_pre_commit_hooks"
+_filter-pre-commit-hooks = "filter_pre_commit_hooks.filter_pre_commit_hooks:filter_pre_commit_hooks"
 
 [dependency-groups]
 
@@ -55,10 +55,6 @@ build-backend = "hatchling.build"
 [tool.uv]
 
 package = true
-
-[tool.hatch.build.targets.wheel]
-
-only-include = ["src"]
 
 [tool.ruff]
 
@@ -108,10 +104,6 @@ warn_unused_ignores = true
 [tool.pytest]
 
 cache_dir = ".cache/pytest"
-
-[tool.pytest.ini_options]
-
-pythonpath = ["src"]
 
 [tool.coverage.run]
 
