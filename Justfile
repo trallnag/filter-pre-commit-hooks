@@ -23,6 +23,7 @@ init:
     .venv
 
   # Check tool availability.
+  filter-pre-commit-hooks --version
   mdformat --version
   pre-commit --version
   shellcheck --version
