@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0).
 
 ## Unreleased
 
+Nothing.
+
+## [2.0.3](https://github.com/trallnag/filter-pre-commit-hooks/compare/v2.0.2...v2.0.3) / 2025-02-20
+
 ### Fixed
 
 - Properly handle parsing of invalid config instead of bubbling up internal
