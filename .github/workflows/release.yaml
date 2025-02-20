@@ -59,6 +59,9 @@ jobs:
       - name: Create release notes
         run: ./scripts/create-release-notes.bash
 
+      - name: Remove prefix from script
+        run: sed --in-place 's/^_//g' pyproject.toml
+
       - name: Build distributions
         run: uv build --out-dir=.tmp/dist
 

@@ -63,6 +63,7 @@ RUN <<-EOT
   uv --version
 
 	uv tool install copier
+  uv tool install filter-pre-commit-hooks
   uv tool install mdformat
   uv tool install pre-commit
 EOT
