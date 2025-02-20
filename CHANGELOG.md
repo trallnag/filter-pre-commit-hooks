@@ -7,6 +7,10 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0).
 
 ## Unreleased
 
+Nothing.
+
+## [2.0.4](https://github.com/trallnag/filter-pre-commit-hooks/compare/v2.0.3...v2.0.4) / 2025-02-20
+
 ### Fixed
 
 - Moved script into proper package called `filter_pre_commit_hooks` and not just
