@@ -30,6 +30,7 @@
 #
 
 import re
+import sys
 from enum import StrEnum
 from pathlib import Path
 from typing import TypedDict, override
@@ -284,10 +285,14 @@ def filter_pre_commit_hooks(  # noqa: PLR0913
     with Path.open(config) as pre_commit_config:
         data: Config = yaml.safe_load(pre_commit_config)
 
+    if not isinstance(data, dict):
+        click.echo("Failed to parse config.", err=True)
+        sys.exit(1)
+
     filtered_hooks = set()
 
-    for repo in data["repos"]:
-        for hook in repo["hooks"]:
+    for repo in data.get("repos", []):
+        for hook in repo.get("hooks", []):
             if is_hook_filtered(hook, filters, target, mode, orient):
                 filtered_hooks.add(hook["id"])
 

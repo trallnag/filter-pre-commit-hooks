@@ -2,6 +2,8 @@
 Integration tests for the `filter_pre_commit_hooks` module.
 """
 
+from pathlib import Path
+
 import click
 import pytest
 from click.testing import CliRunner
@@ -29,6 +31,23 @@ def test_command() -> None:
         pass
 
     CliRunner().invoke(command, ["--help"])
+
+
+def test_invalid_config(tmp_path: Path) -> None:
+    """
+    Test that program fails with error message when invalid config is provided.
+    """
+
+    invalid_config = tmp_path / "invalid.yaml"
+    invalid_config.write_text("invalid")
+
+    result = CliRunner().invoke(
+        filter_pre_commit_hooks,
+        ["--config", str(invalid_config.absolute())],
+    )
+
+    assert result.output == "Failed to parse config.\n"
+    assert result.exit_code == 1
 
 
 @pytest.mark.parametrize(
