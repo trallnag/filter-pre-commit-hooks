@@ -18,11 +18,13 @@ VERSION=1.0.1
 ```
 
 Bump the version constants in [`pyproject.toml`](./pyproject.toml) and
-[`src/filter_pre_commit_hooks.py`](./src/filter_pre_commit_hooks.py):
+[`src/filter_pre_commit_hooks/filter_pre_commit_hooks.py`](./src/filter_pre_commit_hooks/filter_pre_commit_hooks.py):
 
 ```sh
-sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
-sed -i "s/^VERSION = \".*\"/VERSION = \"$VERSION\"/" src/filter_pre_commit_hooks/filter_pre_commit_hooks.py
+sed --in-place "s/^version = \".*\"/version = \"$VERSION\"/" \
+  pyproject.toml
+sed --in-place "s/^VERSION = \".*\"/VERSION = \"$VERSION\"/" \
+  src/filter_pre_commit_hooks/filter_pre_commit_hooks.py
 uv sync
 ```
 
