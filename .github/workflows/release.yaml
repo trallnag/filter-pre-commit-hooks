@@ -3,7 +3,7 @@ name: Release
 #
 # This workflow releases a new version of this project.
 #
-# Make sure to prepare project for a new release (see docs for more).
+# Make sure to prepare the project for a new release (see docs for more).
 #
 
 on:
@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: PyPI
-      url: https://pypi.org/project/filter-pre-commit-hooks
+      url: https://pypi.org/project/${{ github.event.repository.name }}
     permissions:
       contents: write
       id-token: write
