@@ -18,27 +18,27 @@ defaults:
     shell: bash
 
 jobs:
-  dev-cont:
-    name: Dev Cont
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+  # dev-cont:
+  #   name: Dev Cont
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out repository
+  #       uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
+  #     - name: Set up Node
+  #       uses: actions/setup-node@v4
 
-      - name: Set up dev container CLI
-        run: npm install -g @devcontainers/cli
+  #     - name: Set up dev container CLI
+  #       run: npm install -g @devcontainers/cli
 
-      - name: Get dev container CLI version
-        run: devcontainer --version
+  #     - name: Get dev container CLI version
+  #       run: devcontainer --version
 
-      - name: Create and run dev container
-        run: devcontainer up --workspace-folder=.
+  #     - name: Create and run dev container
+  #       run: devcontainer up --workspace-folder=.
 
-      - name: Run task in dev container
-        run: devcontainer exec --workspace-folder=. just
+  #     - name: Run task in dev container
+  #       run: devcontainer exec --workspace-folder=. just
 
   keep-enabled:
     name: Keep Enabled
