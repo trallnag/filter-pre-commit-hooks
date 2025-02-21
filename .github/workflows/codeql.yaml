@@ -10,8 +10,16 @@ name: CodeQL
 on:
   workflow_dispatch:
   schedule:
-    # At 04:20 on Monday.
-    - cron: 20 4 * * 1
+    # At 04:15 on Monday.
+    - cron: 15 4 * * 1
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
   codeql:

@@ -3,7 +3,7 @@
 [![ci](https://img.shields.io/github/actions/workflow/status/trallnag/filter-pre-commit-hooks/ci.yaml?label=ci)](https://github.com/trallnag/filter-pre-commit-hooks/actions/workflows/ci.yaml)
 [![release](https://img.shields.io/github/actions/workflow/status/trallnag/filter-pre-commit-hooks/release.yaml?label=release)](https://github.com/trallnag/filter-pre-commit-hooks/actions/workflows/release.yaml)
 
-# Filter-Pre-Commit-Hooks
+# Filter-pre-commit-hooks
 
 Small Python program that extracts and filters
 [pre-commit](https://pre-commit.com/) hooks so that only a subset of them can be
@@ -77,7 +77,8 @@ This work is licensed under the
 [`LICENSE`](./LICENSE) for the license text.
 
 The license is also included in the script
-[`src/filter_pre_commit_hooks.py`](./src/filter_pre_commit_hooks.py) itself.
+[`filter_pre_commit_hooks.py`](./src/filter_pre_commit_hooks/filter_pre_commit_hooks.py)
+itself.
 
 ## Template
 

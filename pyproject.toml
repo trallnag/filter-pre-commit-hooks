@@ -60,10 +60,7 @@ package = true
 
 cache-dir = ".cache/ruff"
 
-exclude = [
-  "scripts/filter_pre_commit_hooks.py",
-  "scripts/exec_cmds_defer_errors.py",
-]
+exclude = []
 
 [tool.ruff.lint]
 

@@ -22,7 +22,7 @@ Bump the version constants in [`pyproject.toml`](./pyproject.toml) and
 
 ```sh
 sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
-sed -i "s/^VERSION = \".*\"/VERSION = \"$VERSION\"/" src/filter_pre_commit_hooks.py
+sed -i "s/^VERSION = \".*\"/VERSION = \"$VERSION\"/" src/filter_pre_commit_hooks/filter_pre_commit_hooks.py
 uv sync
 ```
 

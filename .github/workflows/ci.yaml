@@ -46,6 +46,7 @@ jobs:
 
       - name: Install tools with uv
         run: |
+          uv tool install exec-cmds-defer-errors
           uv tool install filter-pre-commit-hooks
           uv tool install mdformat
           uv tool install pre-commit

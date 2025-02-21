@@ -23,6 +23,7 @@ init:
     .venv
 
   # Check tool availability.
+  exec-cmds-defer-errors --version
   filter-pre-commit-hooks --version
   mdformat --version
   pre-commit --version
@@ -43,10 +44,20 @@ init:
 # Update dependencies.
 update:
   # Try to update tools managed with Homebrew.
-  ./scripts/update-pkgs-brew.bash just shellcheck shfmt uv yamlfmt
+  ./scripts/update-pkgs-brew.bash \
+    just \
+    shellcheck \
+    shfmt \
+    uv \
+    yamlfmt
 
   # Try to update tools managed with uv.
-  ./scripts/update-pkgs-uv.bash copier mdformat pre-commit
+  ./scripts/update-pkgs-uv.bash \
+    copier \
+    exec-cmds-defer-errors \
+    filter-pre-commit-hooks \
+    mdformat \
+    pre-commit
 
   # Update pre-commit repositories and hooks.
   pre-commit autoupdate
@@ -56,7 +67,7 @@ update:
 
 # Run recipes that fix stuff.
 fix:
-  ./scripts/exec_cmds_defer_errors.py \
+  exec-cmds-defer-errors \
     "just fix--pre-commit" \
     "just fix--mdformat" \
     "just fix--shfmt" \
@@ -81,7 +92,7 @@ fix--ruff:
 
 # Run recipes that check stuff.
 check:
-  ./scripts/exec_cmds_defer_errors.py \
+  exec-cmds-defer-errors \
     "just check--pre-commit" \
     "just check--shellcheck" \
     "just check--ruff" \
