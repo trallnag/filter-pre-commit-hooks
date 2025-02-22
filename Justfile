@@ -114,9 +114,14 @@ check--ruff:
 check--mypy:
   uv run --quiet dmypy run --timeout 3600 src tests
 
-# Test project with pytest
+# Test project with pytest.
 test:
   uv run --quiet pytest --cov --cov-report=term-missing:skip-covered
+
+# Create release notes based on changelog.
+[group('misc')]
+create-release-notes:
+  ./scripts/create-release-notes.bash CHANGELOG.md .tmp/release-notes.md
 
 # Sync dependencies from project config to script inline metadata.
 [group('misc')]

@@ -45,6 +45,9 @@ jobs:
           value="${{ steps.release-version.outputs.value }} / $(date +%Y-%m-%d)"
           echo "value=$value" | tee -a $GITHUB_OUTPUT
 
+      - name: Set up just
+        uses: extractions/setup-just@v2
+
       - name: Set up uv
         uses: astral-sh/setup-uv@v5
 
@@ -57,7 +60,7 @@ jobs:
         run: uv tool install mdformat
 
       - name: Create release notes
-        run: ./scripts/create-release-notes.bash
+        run: just create-release-notes
 
       - name: Remove prefix from script
         run: sed --in-place 's/^_//g' pyproject.toml

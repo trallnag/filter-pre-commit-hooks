@@ -36,6 +36,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Set up just
+        uses: extractions/setup-just@v2
+
       - name: Set up uv
         uses: astral-sh/setup-uv@v5
 
@@ -66,18 +69,17 @@ jobs:
           install: true
           cache: true
           tool_versions: |
-            just latest
             shellcheck latest
             shfmt latest
             yamlfmt latest
 
-      - name: Run recipe init
+      - name: Initialize environment
         run: just init
 
-      - name: Run recipe fix
+      - name: Run recipes that fix stuff
         run: just fix
 
-      - name: Run recipe check
+      - name: Run recipes that check stuff
         run: just check
 
       - name: Remove mise file
@@ -143,7 +145,7 @@ jobs:
         with:
           python-version: ${{ steps.python-version.outputs.value }}
 
-      - name: Run recipe test
+      - name: Test project with pytest.
         run: just test
 
   keep-enabled:

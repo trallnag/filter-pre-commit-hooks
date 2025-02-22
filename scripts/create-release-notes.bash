@@ -7,15 +7,16 @@
 
 set -euo pipefail
 
-mkdir -p .tmp
+CHANGELOG_FILE="$0"
+RELEASE_NOTES_FILE="$1"
 
-release_notes=.tmp/release-notes.md
+mkdir -p "$(dirname "$RELEASE_NOTES_FILE")"
 
-awk '/^## /{count++} count==2{print} count==3{exit}' CHANGELOG.md \
+awk '/^## /{count++} count==2{print} count==3{exit}' "$CHANGELOG_FILE" \
   | tail +2 \
   | awk 'NF {p=1} p' | tac \
   | awk 'NF {p=1} p' | tac \
   | sed 's/^### /## /' \
-    > "$release_notes"
+    > "$RELEASE_NOTES_FILE"
 
-mdformat --wrap=no "$release_notes"
+mdformat --wrap=no "$RELEASE_NOTES_FILE"
