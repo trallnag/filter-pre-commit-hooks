@@ -102,7 +102,7 @@ check:
 check--pre-commit:
   ./scripts/run-pre-commit-checks.bash
 
-# Lint shell scripts with ShellCheck
+# Lint shell scripts with ShellCheck.
 check--shellcheck:
   shellcheck **/*.bash **/*.sh
 

@@ -29,7 +29,7 @@ When submitting changes, respect the following guidelines:
 
 - Branch from the master branch and, if needed, rebase to the master branch
   before submitting your pull request.
-- Update [`CHANGELOG.md`](CHANGELOG.md) if the contribution is relevant for the
+- Update [`CHANGELOG.md`](./CHANGELOG.md) if the contribution is relevant for the
   changelog according to the
   [Keep a Changelog](https://keepachangelog.com/en/1.1.0) specification.
 - Ensure that your code has an appropriate set of tests which all pass.
@@ -42,8 +42,8 @@ When submitting changes, respect the following guidelines:
 
 There are several other documents to check out:
 
-- [`DEVELOP.md`](DEVELOP.md)
-- [`MAINTAIN`](MAINTAIN.md)
-- [`RELEASE.md`](RELEASE.md)
+- [`DEVELOP.md`](./DEVELOP.md)
+- [`MAINTAIN.md`](./MAINTAIN.md)
+- [`RELEASE.md`](./RELEASE.md)
 
 If some things are unclear, feel free to reach out via GitHub Discussions.

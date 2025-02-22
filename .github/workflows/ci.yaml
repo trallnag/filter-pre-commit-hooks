@@ -145,7 +145,7 @@ jobs:
         with:
           python-version: ${{ steps.python-version.outputs.value }}
 
-      - name: Test project with pytest.
+      - name: Run tests
         run: just test
 
   keep-enabled:
