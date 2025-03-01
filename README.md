@@ -55,6 +55,13 @@ A valid config used with the script can be found in
 [`.pre-commit-config.yaml`](./.pre-commit-config.yaml). Some tasks in
 [`Justfile`](./Justfile) run selected pre-commit hooks using the script.
 
+## Shell completion
+
+This program uses [Click](https://click.palletsprojects.com/en/stable/) for the
+CLI. Click provides automatically generated shell completion for Bash, Fish, and
+Zsh. Check out the official documentation
+[here](https://click.palletsprojects.com/en/stable/shell-completion/).
+
 ## Project status
 
 The project is maintained by me, [Tim](https://github.com/trallnag), and I am
