@@ -9,6 +9,12 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0).
 
 Nothing.
 
+## [2.0.5](https://github.com/trallnag/filter-pre-commit-hooks/compare/v2.0.4...v2.0.5) / 2025-03-01
+
+### Changed
+
+- Added info about shell completion to documentation.
+
 ## [2.0.4](https://github.com/trallnag/filter-pre-commit-hooks/compare/v2.0.3...v2.0.4) / 2025-02-20
 
 ### Fixed

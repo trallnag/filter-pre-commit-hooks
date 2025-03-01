@@ -38,7 +38,7 @@ from typing import TypedDict, override
 import click
 import yaml
 
-VERSION = "2.0.3"
+VERSION = "2.0.5"
 
 HELP = """
 Extract and filter pre-commit hooks.
