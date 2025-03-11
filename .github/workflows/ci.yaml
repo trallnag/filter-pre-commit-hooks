@@ -118,8 +118,6 @@ jobs:
       - name: Determine python-version
         id: python-version
         run: |
-          set -euo pipefail
-
           if [[ ${{ matrix.python-version }} == min ]]; then
             python_version=$(
               grep --basic-regexp --regexp='^requires-python' pyproject.toml |

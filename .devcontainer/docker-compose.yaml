@@ -3,13 +3,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    command: sleep infinity
 
     environment:
       # Hardlinking (which is the default on Linux) not possible
       # as uv cache lives on a different drive in this configuration.
       UV_LINK_MODE: symlink
-
-    command: sleep infinity
 
     volumes:
       # Workspace itself.
