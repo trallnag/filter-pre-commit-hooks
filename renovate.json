@@ -5,7 +5,8 @@
     ":configMigration",
     "config:recommended",
     "schedule:weekends",
-    "schedule:automergeWeekends"
+    "schedule:automergeWeekends",
+    "helpers:pinGitHubActionDigests"
   ],
 
   "commitBody": "Co-authored-by: Tim Schwenke <tim@trallnag.com>",

@@ -34,16 +34,16 @@ jobs:
       UV_PYTHON_DOWNLOADS: never
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Set up just
-        uses: extractions/setup-just@v3.0.0
+        uses: extractions/setup-just@e33e0265a09d6d736e2ee1e0eb685ef1de4669ff # v3.0.0
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v5.3.1
+        uses: astral-sh/setup-uv@f94ec6bedd8674c4426838e6b50417d36b6ab231 # v5.3.1
 
       - name: Set up Python
-        uses: actions/setup-python@v5.4.0
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
         with:
           python-version-file: pyproject.toml
 
@@ -55,7 +55,7 @@ jobs:
           uv tool install pre-commit
 
       - name: Cache pre-Commit cache
-        uses: actions/cache@v4.2.2
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
         with:
           path: ~/.cache/pre-commit
           key: |
@@ -64,7 +64,7 @@ jobs:
             pre-commit cache dir
 
       - name: Install tools with mise
-        uses: jdx/mise-action@v2.1.11
+        uses: jdx/mise-action@7b911b9999162960b3b0eff7940cbc19ce5dc921 # v2.1.11
         with:
           install: true
           cache: true
@@ -113,7 +113,7 @@ jobs:
           - max
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Determine python-version
         id: python-version
@@ -133,13 +133,13 @@ jobs:
           echo "value=$python_version" | tee -a $GITHUB_OUTPUT
 
       - name: Set up just
-        uses: extractions/setup-just@v3.0.0
+        uses: extractions/setup-just@e33e0265a09d6d736e2ee1e0eb685ef1de4669ff # v3.0.0
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v5.3.1
+        uses: astral-sh/setup-uv@f94ec6bedd8674c4426838e6b50417d36b6ab231 # v5.3.1
 
       - name: Set up Python
-        uses: actions/setup-python@v5.4.0
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
         with:
           python-version: ${{ steps.python-version.outputs.value }}
 
@@ -153,7 +153,7 @@ jobs:
       actions: write
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Keep workflow enabled
-        uses: gautamkrishnar/keepalive-workflow@2.0.10
+        uses: gautamkrishnar/keepalive-workflow@2a8ae70f39b79fb50659d17ccc6f372f461813b2 # 2.0.10
