@@ -19,6 +19,8 @@
 
   "automergeType": "branch",
 
+  "prHourlyLimit": 10,
+
   "lockFileMaintenance": {
     "enabled": true
   },
