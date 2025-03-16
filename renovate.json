@@ -5,7 +5,6 @@
     ":configMigration",
     "config:recommended",
     "schedule:weekends",
-    "schedule:automergeWeekends",
     "helpers:pinGitHubActionDigests"
   ],
 
@@ -17,8 +16,6 @@
 
   "semanticCommits": "enabled",
 
-  "automergeType": "branch",
-
   "prHourlyLimit": 10,
 
   "lockFileMaintenance": {
@@ -28,17 +25,5 @@
   "pre-commit": {
     "enabled": true,
     "prBodyNotes": [""]
-  },
-
-  "packageRules": [
-    {
-      "automerge": true,
-      "matchUpdateTypes": [
-        "minor",
-        "patch",
-        "pin",
-        "digest"
-      ]
-    }
-  ]
+  }
 }
