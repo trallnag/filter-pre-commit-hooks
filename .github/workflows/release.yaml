@@ -31,7 +31,7 @@ jobs:
       id-token: write
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Determine release-version
         id: release-version
@@ -46,13 +46,13 @@ jobs:
           echo "value=$value" | tee -a $GITHUB_OUTPUT
 
       - name: Set up just
-        uses: extractions/setup-just@v2
+        uses: extractions/setup-just@v3.0.0
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v5.3.1
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.4.0
         with:
           python-version-file: pyproject.toml
 

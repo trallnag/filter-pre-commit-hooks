@@ -34,16 +34,16 @@ jobs:
       UV_PYTHON_DOWNLOADS: never
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Set up just
-        uses: extractions/setup-just@v2
+        uses: extractions/setup-just@v3.0.0
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v5.3.1
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.4.0
         with:
           python-version-file: pyproject.toml
 
@@ -55,7 +55,7 @@ jobs:
           uv tool install pre-commit
 
       - name: Cache pre-Commit cache
-        uses: actions/cache@v4
+        uses: actions/cache@v4.2.2
         with:
           path: ~/.cache/pre-commit
           key: |
@@ -64,7 +64,7 @@ jobs:
             pre-commit cache dir
 
       - name: Install tools with mise
-        uses: jdx/mise-action@v2
+        uses: jdx/mise-action@v2.1.11
         with:
           install: true
           cache: true
@@ -113,7 +113,7 @@ jobs:
           - max
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Determine python-version
         id: python-version
@@ -133,13 +133,13 @@ jobs:
           echo "value=$python_version" | tee -a $GITHUB_OUTPUT
 
       - name: Set up just
-        uses: extractions/setup-just@v2
+        uses: extractions/setup-just@v3.0.0
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v5.3.1
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.4.0
         with:
           python-version: ${{ steps.python-version.outputs.value }}
 
@@ -153,7 +153,7 @@ jobs:
       actions: write
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Keep workflow enabled
-        uses: gautamkrishnar/keepalive-workflow@v2
+        uses: gautamkrishnar/keepalive-workflow@2.0.10
