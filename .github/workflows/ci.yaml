@@ -10,8 +10,7 @@ on:
   merge_group:
   push:
     branches:
-      - "*"
-      - "renovate/**"
+      - "**"
   schedule:
     # At 04:10 on Monday.
     - cron: 10 4 * * 1
@@ -25,7 +24,24 @@ defaults:
     shell: bash
 
 jobs:
+  skip:
+    name: Skip
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    outputs:
+      skip: ${{ steps.skip.outputs.should_skip }}
+    steps:
+      - id: skip
+        uses: fkirc/skip-duplicate-actions@f75f66ce1886f00957d99748a42c724f4330bdcf # v5.3.1
+        with:
+          concurrent_skipping: always
+          skip_after_successful_duplicate: true
+
   fix-check:
+    needs: skip
+    if: needs.skip.outputs.skip != 'true'
     name: Fix & Check
     runs-on: ubuntu-latest
     permissions:
@@ -40,52 +56,58 @@ jobs:
       - name: Set up just
         uses: extractions/setup-just@e33e0265a09d6d736e2ee1e0eb685ef1de4669ff # v3.0.0
 
-      - name: Set up uv
-        uses: astral-sh/setup-uv@f94ec6bedd8674c4426838e6b50417d36b6ab231 # v5.3.1
+      # Used by mise to verify tools with aqua backend.
+      - name: Set up Cosign
+        uses: sigstore/cosign-installer@3454372f43399081ed03b604cb2d021dabca52bb # v3.8.2
+
+      # Extract subset of mise tools configuration to separate files which are
+      # used in subsequent steps as part of cache keys.
+      - name: Extract mise tools
+        id: extract-mise-tools
+        run: |
+          mkdir -p .tmp
+          pipx=.tmp/mise-pipx.toml
+          echo "pipx=$pipx" | tee -a $GITHUB_OUTPUT
+          grep -F -e pipx mise.toml > $pipx
+
+      # Init pip cache dir to prevent failure of workflow run with error about
+      # cache folder not existing and that the cache step should be removed.
+      - name: Init pip cache dir
+        run: mkdir -p ~/.cache/pip
 
       - name: Set up Python
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v5.5.0
         with:
           python-version-file: pyproject.toml
 
-      - name: Install tools with uv
-        run: |
-          uv tool install exec-cmds-defer-errors
-          uv tool install filter-pre-commit-hooks
-          uv tool install mdformat
-          uv tool install pre-commit
+      - name: Set up Astral uv
+        uses: astral-sh/setup-uv@6b9c6063abd6010835644d4c2e1bef4cf5cd0fca # v6.0.1
+        with:
+          enable-cache: true
+          cache-suffix: fix-check
+          cache-dependency-glob: |
+            uv.lock
+            ${{ steps.extract-mise-tools.outputs.pipx }}
 
-      - name: Cache pre-Commit cache
-        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
+      - name: Cache pre-commit cache
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
         with:
           path: ~/.cache/pre-commit
-          key: |
-            pre-commit cache dir ${{ hashFiles('.pre-commit-config.yaml') }}
-          restore-keys: |
+          key: >-
             pre-commit cache dir
+            ${{ hashFiles('.pre-commit-config.yaml') }}
 
-      - name: Install tools with mise
-        uses: jdx/mise-action@5083fe46898c414b2475087cc79da59e7da859e8 # v2.1.11
+      - name: Set up mise
+        uses: jdx/mise-action@7a111ead46986ccad89a74ad013ba2a7c08c9e67 # v2.2.1
         with:
           install: true
           cache: true
-          tool_versions: |
-            shellcheck latest
-            shfmt latest
-            yamlfmt latest
-
-      - name: Initialize environment
-        run: just init
 
       - name: Run recipes that fix stuff
         run: just fix
 
       - name: Run recipes that check stuff
         run: just check
-
-      - name: Remove mise file
-        if: cancelled() == false
-        run: rm -f .tool-versions
 
       - name: Commit and push changes
         if: |
@@ -94,12 +116,14 @@ jobs:
           github.ref_type != 'tag' &&
           startsWith(github.ref, 'refs/head/renovate/') == false
         id: auto-commit-action
-        uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # v5.1.0
+        uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5.2.0
         with:
           commit_message: "ci: Apply automatic improvements"
           commit_options: --no-verify --signoff
 
   test:
+    needs: skip
+    if: needs.skip.outputs.skip != 'true'
     name: Test
     runs-on: ubuntu-latest
     permissions:
@@ -136,25 +160,18 @@ jobs:
       - name: Set up just
         uses: extractions/setup-just@e33e0265a09d6d736e2ee1e0eb685ef1de4669ff # v3.0.0
 
-      - name: Set up uv
-        uses: astral-sh/setup-uv@f94ec6bedd8674c4426838e6b50417d36b6ab231 # v5.3.1
-
       - name: Set up Python
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v5.5.0
         with:
           python-version: ${{ steps.python-version.outputs.value }}
 
+      - name: Set up Astral uv
+        uses: astral-sh/setup-uv@6b9c6063abd6010835644d4c2e1bef4cf5cd0fca # v6.0.1
+        with:
+          enable-cache: true
+          cache-suffix: test
+          cache-dependency-glob: |
+            uv.lock
+
       - name: Run tests
         run: just test
-
-  keep-enabled:
-    name: Keep Enabled
-    runs-on: ubuntu-latest
-    permissions:
-      actions: write
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-
-      - name: Keep workflow enabled
-        uses: gautamkrishnar/keepalive-workflow@2a8ae70f39b79fb50659d17ccc6f372f461813b2 # 2.0.10

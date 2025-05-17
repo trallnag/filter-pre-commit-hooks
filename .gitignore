@@ -1,15 +1,15 @@
+# General.
 .cache/
 .local/
 .tmp/
 .vscode/
 dist/
+tmp/
 
 # Python.
 **/__pycache__/
 *.egg-info/
 *.pyc
 .coverage
-.venv/
-
-# Mypy.
 .dmypy.json
+.venv/

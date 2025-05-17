@@ -10,16 +10,18 @@
   "customizations": {
     "vscode": {
       "settings": {
-        "terminal.integrated.defaultProfile.linux": "zsh",
-        "terminal.integrated.profiles.linux": {
-          "zsh": { "path": "/usr/bin/zsh" }
-        },
+        "mise.checkForNewMiseVersion": false,
+        "mise.updateOpenTerminalsEnvAutomatically": true,
         "python.testing.pytestArgs": ["tests"],
+        "python.testing.pytestEnabled": true,
         "python.testing.unittestEnabled": false,
-        "python.testing.pytestEnabled": true
+        "shellcheck.executablePath": "/home/vscode/.local/share/mise/shims/shellcheck",
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux.zsh.path": "/usr/bin/zsh"
       },
 
       "extensions": [
+        "BlueGlassBlock.better-json5",
         "EditorConfig.EditorConfig",
         "Gerrnperl.outline-map",
         "GitHub.copilot",
@@ -31,6 +33,7 @@
         "charliermarsh.ruff",
         "donjayamanne.githistory",
         "github.vscode-github-actions",
+        "hverlin.mise-vscode",
         "mhutchie.git-graph",
         "mkhl.shfmt",
         "ms-python.mypy-type-checker",
@@ -51,5 +54,5 @@
     "fixVolumeCache": "sudo chown -R vscode:vscode .cache"
   },
 
-  "postStartCommand": "just init"
+  "postStartCommand": "/usr/bin/env zsh --interactive --login -c \"mise trust && MISE_VERBOSE=1 MISE_JOBS=1 just init\""
 }

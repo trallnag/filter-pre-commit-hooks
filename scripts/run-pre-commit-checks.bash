@@ -1,14 +1,18 @@
 #!/usr/bin/env bash
 
 #
-# This script runs pre-commit hooks that are tagged with "check" and "task".
+# Runs pre-commit hooks that are tagged with "check" and "task".
 #
 
 set -euo pipefail
 
+mx() {
+  mise exec -- "$@"
+}
+
 declare -x SKIP
 
-SKIP=$(filter-pre-commit-hooks check task)
+SKIP=$(mx filter-pre-commit-hooks check task)
 
-pre-commit run --all-files \
+mx pre-commit run --all-files \
   | (grep --invert-match --regexp='Skipped' || true)

@@ -1,7 +1,7 @@
 name: Release
 
 #
-# This workflow releases a new version of this project.
+# Releases a new version of this project.
 #
 # Make sure to prepare the project for a new release (see docs for more).
 #
@@ -34,30 +34,48 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Determine release-version
-        id: release-version
+        id: determine-release-version
         run: |
-          value=$(echo "${GITHUB_REF#refs/*/}" | cut -c 2-)
-          echo "value=$value" | tee -a $GITHUB_OUTPUT
+          release_version=$(echo "${GITHUB_REF#refs/*/}" | cut -c 2-)
+          echo "release-version=$release_version" | tee -a $GITHUB_OUTPUT
 
       - name: Determine release-name
-        id: release-name
+        id: determine-release-name
         run: |
-          value="${{ steps.release-version.outputs.value }} / $(date +%Y-%m-%d)"
-          echo "value=$value" | tee -a $GITHUB_OUTPUT
+          release_name="${{ steps.determine-release-version.outputs.release-version }} / $(date +%Y-%m-%d)"
+          echo "release-name=$release_name" | tee -a $GITHUB_OUTPUT
 
       - name: Set up just
         uses: extractions/setup-just@e33e0265a09d6d736e2ee1e0eb685ef1de4669ff # v3.0.0
 
-      - name: Set up uv
-        uses: astral-sh/setup-uv@f94ec6bedd8674c4426838e6b50417d36b6ab231 # v5.3.1
-
       - name: Set up Python
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v5.5.0
         with:
           python-version-file: pyproject.toml
 
+      - name: Set up Astral uv
+        uses: astral-sh/setup-uv@6b9c6063abd6010835644d4c2e1bef4cf5cd0fca # v6.0.1
+        with:
+          enable-cache: true
+          cache-suffix: release
+          cache-dependency-glob: |
+            uv.lock
+
+      - name: Determine mdformat version
+        id: determine-mdformat-version
+        run: |
+          mdformat_version=$(
+            grep \
+              --extended-regexp \
+              --only-matching \
+              --regexp='"pipx:mdformat" = ".+"' \
+              mise.toml \
+              | cut -c20- | rev | cut -c2- | rev
+          )
+          echo "mdformat-version=$mdformat_version" | tee -a $GITHUB_OUTPUT
+
       - name: Install mdformat
-        run: uv tool install mdformat
+        run: uv tool install mdformat@${{ steps.determine-mdformat-version.outputs.mdformat-version }}
 
       - name: Create release notes
         run: just create-release-notes
@@ -74,8 +92,8 @@ jobs:
           packages-dir: .tmp/dist
 
       - name: Create GitHub release
-        uses: softprops/action-gh-release@c95fe1489396fe8a9eb87c0abf8aa5b2ef267fda # v2.2.1
+        uses: softprops/action-gh-release@da05d552573ad5aba039eaac05058a918a7bf631 # v2.2.2
         with:
-          name: ${{ steps.release-name.outputs.value }}
+          name: ${{ steps.determine-release-name.outputs.release-name }}
           body_path: .tmp/release-notes.md
           draft: true

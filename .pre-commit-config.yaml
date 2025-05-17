@@ -84,14 +84,14 @@ repos:
         alias: yamlfmt (fix, task)
         name: Format YAML files with yamlfmt
         language: system
-        entry: yamlfmt
+        entry: mise exec -- yamlfmt
         types: [yaml]
 
       - id: mdformat
         alias: mdformat (fix)
         name: Format Markdown files with mdformat
         language: system
-        entry: mdformat
+        entry: mise exec -- mdformat
         types: [markdown]
 
       - id: shfmt
@@ -99,7 +99,7 @@ repos:
         name: Format shell scripts with shfmt
         language: system
         require_serial: true
-        entry: shfmt --write
+        entry: mise exec -- shfmt --write
         types: [bash, sh]
 
       - id: shellcheck
@@ -107,7 +107,7 @@ repos:
         name: Check shell scripts with ShellCheck
         require_serial: true
         language: system
-        entry: shellcheck
+        entry: mise exec -- shellcheck
         types: [bash, sh]
 
       - id: ruff-format
