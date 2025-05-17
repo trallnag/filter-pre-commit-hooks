@@ -22,7 +22,7 @@
 # requires-python = ">= 3.12"
 #
 # dependencies = [
-#   "click == 8.1.8",
+#   "click == 8.2.0",
 #   "pyyaml == 6.0.2",
 # ]
 #
@@ -237,7 +237,7 @@ def format_hooks(
 )
 @click.option(
     "--target",
-    type=click.Choice([target.value for target in Target]),
+    type=Target,
     default=Target.TAG,
     help=(
         "Target to filter hooks by. "
@@ -247,7 +247,7 @@ def format_hooks(
 )
 @click.option(
     "--mode",
-    type=click.Choice([mode.value for mode in Mode]),
+    type=Mode,
     default=Mode.ALL_OF,
     help=(
         "Mode to filter hooks by target. "
@@ -257,7 +257,7 @@ def format_hooks(
 )
 @click.option(
     "--orient",
-    type=click.Choice([orient.value for orient in Orient]),
+    type=Orient,
     default=Orient.INVERT,
     help=(
         "Invert the filter. "
@@ -268,7 +268,7 @@ def format_hooks(
 @click.option(
     "--format",
     "o_format",
-    type=click.Choice([o_format.value for o_format in Format]),
+    type=Format,
     default=Format.COMMA,
 )
 @click.version_option(VERSION)

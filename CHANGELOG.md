@@ -7,7 +7,9 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0).
 
 ## Unreleased
 
-Nothing.
+### Changed
+
+- Updated dependencies.
 
 ## [2.0.5](https://github.com/trallnag/filter-pre-commit-hooks/compare/v2.0.4...v2.0.5) / 2025-03-01
 

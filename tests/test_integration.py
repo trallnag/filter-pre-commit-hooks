@@ -46,7 +46,7 @@ def test_invalid_config(tmp_path: Path) -> None:
 
     result = CliRunner().invoke(
         filter_pre_commit_hooks,
-        ["--config", str(invalid_config.absolute())],
+        ["--config", str(invalid_config.absolute()), "x"],
     )
 
     assert result.output == "Failed to parse config.\n"
