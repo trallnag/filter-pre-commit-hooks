@@ -49,7 +49,7 @@
         'mise.toml',
       ],
       matchStrings: [
-        '# Renovate: datasource=(?<datasource>.+) packageName=(?<packageName>.+)\\n".+" = "(?<currentValue>.+)"\\n',
+        '# Renovate: datasource=(?<datasource>.+) packageName=(?<packageName>.+)\\n.+ = "(?<currentValue>.+)"\\n',
       ],
     },
   ],

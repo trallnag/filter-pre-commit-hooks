@@ -3,6 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      secrets:
+        - github-token
+        - homebrew-github-api-token
 
     command: sleep infinity
 
@@ -10,6 +13,7 @@ services:
       - GITHUB_TOKEN
       - MISE_GITHUB_TOKEN
       - HOMEBREW_GITHUB_API_TOKEN
+      - RENOVATE_GITHUB_COM_TOKEN
 
       # Hardlinking (which is the default on Linux) not possible
       # as uv cache lives on a different drive in this configuration.
@@ -28,3 +32,9 @@ services:
 volumes:
   venv: # Virtual environment.
   cache: # Workspace cache.
+
+secrets:
+  github-token:
+    environment: GITHUB_TOKEN
+  homebrew-github-api-token:
+    environment: HOMEBREW_GITHUB_API_TOKEN

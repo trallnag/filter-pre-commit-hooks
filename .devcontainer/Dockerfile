@@ -9,6 +9,8 @@ ARG APT_PKGS="\
   curl \
   dnsutils \
   gnupg2 \
+  python-is-python3 \
+  python3 \
   xxd \
 "
 
@@ -38,7 +40,10 @@ RUN <<-EOT
 EOT
 
 # Install various packages with Homebrew.
-RUN <<-EOT
+RUN \
+  --mount=type=secret,id=github-token,env=GITHUB_TOKEN \
+  --mount=type=secret,id=homebrew-github-api-token,env=HOMEBREW_GITHUB_API_TOKEN \
+<<-EOT
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   brew install $BREW_PKGS
 EOT
