@@ -49,9 +49,9 @@
   },
 
   "postCreateCommand": {
-    "fixVolumeWorkspace": "sudo chown -R vscode:vscode /workspaces/filter-pre-commit-hooks",
-    "fixVolumeCache": "sudo chown -R vscode:vscode /home/vscode/.cache"
+    "fixVolumeWorkspaceCache": "sudo chown -R vscode:vscode /workspaces/filter-pre-commit-hooks/.cache",
+    "fixVolumeUserCache": "sudo chown -R vscode:vscode /home/vscode/.cache"
   },
 
-  "postStartCommand": "/usr/bin/env zsh --interactive --login -c \"mise trust && MISE_VERBOSE=1 MISE_JOBS=1 just init\""
+  "postStartCommand": "/usr/bin/env zsh --interactive --login -c \"rm -rf .cache/* && rm -rf .venv && mise trust && MISE_VERBOSE=1 MISE_JOBS=1 just init\""
 }
