@@ -37,4 +37,4 @@ secrets:
   github-token:
     environment: GITHUB_TOKEN
   homebrew-github-api-token:
-    environment: HOMEBREW_GITHUB_API_TOKEN
+    environment: HOMEBREW_GITHUB_API_TOKENx
