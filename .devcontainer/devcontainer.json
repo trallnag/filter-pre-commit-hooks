@@ -16,8 +16,7 @@
         "python.testing.pytestEnabled": true,
         "python.testing.unittestEnabled": false,
         "shellcheck.executablePath": "/home/vscode/.local/share/mise/shims/shellcheck",
-        "terminal.integrated.defaultProfile.linux": "zsh",
-        "terminal.integrated.profiles.linux.zsh.path": "/usr/bin/zsh"
+        "terminal.integrated.defaultProfile.linux": "zsh"
       },
 
       "extensions": [
