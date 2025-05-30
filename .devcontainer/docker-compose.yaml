@@ -21,20 +21,17 @@ services:
 
     volumes:
       # Workspace itself.
-      - ..:/workspaces/filter-pre-commit-hooks:cached
+      - workspace:/workspaces/filter-pre-commit-hooks
 
-      # Virtual environment.
-      - venv:/workspaces/filter-pre-commit-hooks/.venv
-
-      # Workspace cache.
-      - cache:/workspaces/filter-pre-commit-hooks/.cache
+      # User cache.
+      - cache:/home/vscode/.cache
 
 volumes:
-  venv: # Virtual environment.
-  cache: # Workspace cache.
+  workspace: # Workspace itself.
+  cache: # User cache.
 
 secrets:
   github-token:
     environment: GITHUB_TOKEN
   homebrew-github-api-token:
-    environment: HOMEBREW_GITHUB_API_TOKENx
+    environment: HOMEBREW_GITHUB_API_TOKEN
