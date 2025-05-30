@@ -32,9 +32,17 @@ services:
       # User cache.
       - user-cache:/home/vscode/.cache:cached
 
+      # Mise data.
+      - mise-share:/home/vscode/.local/share/mise:cached
+
+      # Mise state.
+      - mise-state:/home/vscode/.local/state/mise:cached
+
 volumes:
   workspace-cache: # Workspace cache.
   user-cache: # User cache.
+  mise-share: # Mise data.
+  mise-state: # Mise state.
 
 secrets:
   github-token:
