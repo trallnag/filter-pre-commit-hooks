@@ -16,8 +16,7 @@ init:
   mkdir -p \
     .cache \
     .local \
-    .tmp \
-    .venv
+    .tmp
 
   # Set up mise environment.
   mise --version
