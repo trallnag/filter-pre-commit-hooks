@@ -98,10 +98,6 @@ no_implicit_optional = true
 check_untyped_defs = true
 warn_unused_ignores = true
 
-[tool.pytest]
-
-cache_dir = ".cache/pytest"
-
 [tool.coverage.run]
 
 branch = true
