@@ -14,11 +14,11 @@ license = "ISC"
 
 license-files = ["LICENSE"]
 
-requires-python = ">= 3.12"
+requires-python = ">=3.12"
 
 dependencies = [
-  "click ==8.2.1",
-  "pyyaml == 6.0.2",
+  "click==8.2.1",
+  "pyyaml==6.0.2",
 ]
 
 readme = "README.md"
@@ -40,11 +40,11 @@ _filter-pre-commit-hooks = "filter_pre_commit_hooks.filter_pre_commit_hooks:filt
 [dependency-groups]
 
 dev = [
-  "mypy >= 1.14.1",
-  "pytest-cov >= 6.0.0",
-  "pytest >= 8.3.4",
-  "ruff >= 0.8.4",
-  "types-pyyaml >= 6.0.12.20241230",
+  "mypy>=1.14.1",
+  "pytest-cov>=6.0.0",
+  "pytest>=8.3.4",
+  "ruff>=0.8.4",
+  "types-pyyaml>=6.0.12.20241230",
 ]
 
 [build-system]
