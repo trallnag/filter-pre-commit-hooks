@@ -68,7 +68,7 @@ jobs:
           mkdir -p .tmp
           pipx=.tmp/mise-pipx.toml
           echo "pipx=$pipx" | tee -a $GITHUB_OUTPUT
-          grep -F -e pipx mise.toml > $pipx
+          grep -F -e pipx mise.toml | tee $pipx
 
       # Init pip cache dir to prevent failure of workflow run with error about
       # cache folder not existing and that the cache step should be removed.
@@ -76,6 +76,7 @@ jobs:
         run: mkdir -p ~/.cache/pip
 
       - name: Set up Python
+        id: set-up-python
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version-file: pyproject.toml
@@ -98,13 +99,14 @@ jobs:
             ${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Set up mise
-        uses: jdx/mise-action@13abe502c30c1559a5c37dff303831bab82c9402 # v2.2.3
+        uses: jdx/mise-action@5cb1df66ed5e1fb3c670ea0b62fd17a76979826a # v2.3.1
         env:
           MISE_JOBS: 1
           MISE_VERBOSE: 1
         with:
           install: true
           cache: true
+          cache_key_prefix: ${{ steps.set-up-python.outputs.python-version }}
 
       - name: Run recipes that fix stuff
         run: just fix
