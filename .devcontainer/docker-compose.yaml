@@ -15,34 +15,12 @@ services:
       - HOMEBREW_GITHUB_API_TOKEN
       - RENOVATE_GITHUB_COM_TOKEN
 
-      # Hardlinking (which is the default on Linux) not possible
-      # as uv cache lives on a different drive in this configuration.
-      - UV_LINK_MODE=symlink
-
       # Move the virtual environment out of the workspace to avoid conflicts.
       - UV_PROJECT_ENVIRONMENT=/workspaces/filter-pre-commit-hooks-venv
 
     volumes:
       # Workspace itself.
       - ..:/workspaces/filter-pre-commit-hooks:cached
-
-      # Workspace cache.
-      - workspace-cache:/workspaces/filter-pre-commit-hooks/.cache:cached
-
-      # User cache.
-      - user-cache:/home/vscode/.cache:cached
-
-      # Mise data.
-      - mise-share:/home/vscode/.local/share/mise:cached
-
-      # Mise state.
-      - mise-state:/home/vscode/.local/state/mise:cached
-
-volumes:
-  workspace-cache: # Workspace cache.
-  user-cache: # User cache.
-  mise-share: # Mise data.
-  mise-state: # Mise state.
 
 secrets:
   github-token:
