@@ -58,7 +58,7 @@ jobs:
 
       # Used by mise to verify tools with aqua backend.
       - name: Set up Cosign
-        uses: sigstore/cosign-installer@3454372f43399081ed03b604cb2d021dabca52bb # v3.8.2
+        uses: sigstore/cosign-installer@398d4b0eeef1380460a10c8013a76f728fb906ac # v3.9.1
 
       # Extract subset of mise tools configuration to separate files which are
       # used in subsequent steps as part of cache keys.
