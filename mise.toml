@@ -5,19 +5,19 @@
 #
 
 # Renovate: datasource=github-releases packageName=copier-org/copier
-copier = "9.7.1"
+copier = "9.16.0"
 
 # Renovate: datasource=github-releases packageName=pre-commit/pre-commit
-pre-commit = "4.2.0"
+pre-commit = "4.6.0"
 
 # Renovate: datasource=github-releases packageName=koalaman/shellcheck
-shellcheck = "0.10.0"
+shellcheck = "0.11.0"
 
 # Renovate: datasource=github-releases packageName=mvdan/sh
-shfmt = "3.11.0"
+shfmt = "3.13.1"
 
 # Renovate: datasource=github-releases packageName=google/yamlfmt
-yamlfmt = "0.17.1"
+yamlfmt = "0.21.0"
 
 #
 # Tools with explicit backends.
@@ -30,4 +30,4 @@ yamlfmt = "0.17.1"
 "pipx:filter-pre-commit-hooks" = "2.0.5"
 
 # Renovate: datasource=pypi packageName=mdformat
-"pipx:mdformat" = "0.7.22"
+"pipx:mdformat" = "1.0.0"

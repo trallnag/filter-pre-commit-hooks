@@ -17,6 +17,7 @@ services:
 
       # Move the virtual environment out of the workspace to avoid conflicts.
       - UV_PROJECT_ENVIRONMENT=/workspaces/filter-pre-commit-hooks-venv
+      - UV_LINK_MODE=copy
 
     volumes:
       # Workspace itself.

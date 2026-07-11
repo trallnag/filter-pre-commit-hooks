@@ -1,6 +1,6 @@
-# syntax=docker/dockerfile:1@sha256:9857836c9ee4268391bb5b09f9f157f3c91bb15821bb77969642813b0d00518d
+# syntax=docker/dockerfile:1@sha256:87999aa3d42bdc6bea60565083ee17e86d1f3339802f543c0d03998580f9cb89
 
-FROM  mcr.microsoft.com/devcontainers/base:bookworm@sha256:ce2e9e611939e611b737362c045bb6d3449bb3efb84898525d724aace1737b90
+FROM  mcr.microsoft.com/devcontainers/base:bookworm@sha256:aba0f2e0730af481edf2db5582a80c0ed2591bee78ec177f7fa7a38e8f5e1105
 
 USER vscode
 
@@ -22,6 +22,7 @@ ARG BREW_PKGS="\
   jq \
   just \
   mise \
+  ripgrep \
   uv \
   watchexec \
   zsh-completions \

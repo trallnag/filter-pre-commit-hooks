@@ -50,7 +50,7 @@ git log --show-signature --max-count=1
 Push changes:
 
 ```sh
-git push origin master
+git push
 ```
 
 Check
@@ -89,3 +89,14 @@ If everything is fine, go to the release page of this project on GitHub
 the automatically created release draft.
 
 Publish the draft.
+
+## Miscellaneous
+
+### Handling of pre-releases
+
+To publish a version for testing purposes pick a version with the suffix `.devN`
+where the `N` is an incrementing number starting at 1. Format the changelog
+entry accordingly. In PyPI, the package version will show up as a pre-release
+automatically. The release in GitHub must be marked as a pre-release before
+publishing. Skip the GitHub release entirely depending on the target group of
+the dev release.

@@ -23,13 +23,10 @@
       "extensions": [
         "BlueGlassBlock.better-json5",
         "EditorConfig.EditorConfig",
-        "Gerrnperl.outline-map",
         "GitHub.copilot",
         "GitHub.copilot-chat",
         "GitHub.vscode-pull-request-github",
-        "Gruntfuggly.todo-tree",
         "Tyriar.sort-lines",
-        "VisualStudioExptTeam.vscodeintellicode",
         "charliermarsh.ruff",
         "donjayamanne.githistory",
         "github.vscode-github-actions",
@@ -43,7 +40,6 @@
         "tamasfe.even-better-toml",
         "timonwong.shellcheck",
         "tomoki1207.selectline-statusbar",
-        "waderyan.gitblame",
         "yzhang.markdown-all-in-one"
       ]
     }
