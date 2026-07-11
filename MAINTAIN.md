@@ -21,6 +21,12 @@ each other.
 One approach is to simply set the versions in the config file to the ones
 specified in the lock file.
 
+## Bump Debian release of dev container
+
+While Renovate takes care of updates within a release, it overall stays stuck at
+the defined release, for example Bookworm or Trixie. To update, remove the
+checksum and adjust the release name.
+
 ## Update upstream Copier template
 
 This project is based on the following
