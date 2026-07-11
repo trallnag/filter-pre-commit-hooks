@@ -7,9 +7,14 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0).
 
 ## Unreleased
 
+Nothing.
+
+## [3.0.0](https://github.com/trallnag/filter-pre-commit-hooks/compare/v2.0.5...v3.0.0) / 2026-07-11
+
 ### Changed
 
-- Updated dependencies.
+- Updated required dependency versions.
+- **BREAKING:** Bumped required version of Python from 3.12 to 3.14.
 
 ## [2.0.5](https://github.com/trallnag/filter-pre-commit-hooks/compare/v2.0.4...v2.0.5) / 2025-03-01
 

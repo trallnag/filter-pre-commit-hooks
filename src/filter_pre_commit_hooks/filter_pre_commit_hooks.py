@@ -23,7 +23,7 @@
 #
 # dependencies = [
 #   "click==8.4.2",
-#   "pyyaml==6.0.2",
+#   "pyyaml==6.0.3",
 # ]
 #
 # ///
@@ -38,7 +38,7 @@ from typing import TypedDict, override
 import click
 import yaml
 
-VERSION = "2.0.5"
+VERSION = "3.0.0"
 
 HELP = """
 Extract and filter pre-commit hooks.

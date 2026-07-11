@@ -8,7 +8,7 @@ authors = [
   {name = "Tim Schwenke", email = "tim@trallnag.com"},
 ]
 
-version = "2.0.5"
+version = "3.0.0"
 
 license = "ISC"
 
@@ -18,7 +18,7 @@ requires-python = ">=3.14"
 
 dependencies = [
   "click==8.4.2",
-  "pyyaml==6.0.2",
+  "pyyaml==6.0.3",
 ]
 
 readme = "README.md"
