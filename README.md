@@ -6,18 +6,18 @@
 
 # Filter-pre-commit-hooks
 
-Small Python program that extracts and filters
+Small Python script that extracts and filters
 [pre-commit](https://pre-commit.com/) hooks so that only a subset of them can be
-executed. Why is such a program helpful? Pre-commit only provides a way to skip
+executed. Why is such a script helpful? Pre-commit only provides a way to skip
 hooks. There is no way to explicitly state which hooks should be run.
 
-The program is available in this repository as the script
+The script is available in this repository as the script
 [`filter_pre_commit_hooks.py`](./src/filter_pre_commit_hooks/filter_pre_commit_hooks.py)
 and as the package
 [filter-pre-commit-hooks](https://pypi.org/project/filter-pre-commit-hooks/) on
 PyPI.
 
-By default, the program returns all hooks that have the given tags. In the
+By default, the script returns all hooks that have the given tags. In the
 following example, all pre-commit hooks that are tagged with `fix` and `task`
 are executed (tagging is described further below):
 
@@ -25,7 +25,7 @@ are executed (tagging is described further below):
 SKIP=$(uv run -s filter_pre_commit_hooks.py fix task) pre-commit run -a
 ```
 
-The program itself is executed with `uv run`, a subcommand of
+The script itself is executed with `uv run`, a subcommand of
 [uv](https://docs.astral.sh/), which is a package manager for Python. This is
 because the script contains
 [inline script metadata](https://packaging.python.org/en/latest/specifications/inline-script-metadata/#inline-script-metadata)
@@ -58,7 +58,7 @@ A valid config used with the script can be found in
 
 ## Shell completion
 
-This program uses [Click](https://click.palletsprojects.com/en/stable/) for the
+This script uses [Click](https://click.palletsprojects.com/en/stable/) for the
 CLI. Click provides automatically generated shell completion for Bash, Fish, and
 Zsh. Check out the official documentation
 [here](https://click.palletsprojects.com/en/stable/shell-completion/).
