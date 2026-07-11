@@ -1,5 +1,6 @@
 [![status](https://img.shields.io/badge/status-active-brightgreen)](#project-status)
 [![release](https://img.shields.io/github/v/release/trallnag/filter-pre-commit-hooks)](https://github.com/trallnag/filter-pre-commit-hooks/releases)
+[![downloads](https://static.pepy.tech/personalized-badge/filter-pre-commit-hooks?period=monthly&units=INTERNATIONAL_SYSTEM&left_color=GREY&right_color=BLUE&left_text=downloads%2Fmonth)](https://pepy.tech/projects/filter-pre-commit-hooks)
 [![ci](https://img.shields.io/github/actions/workflow/status/trallnag/filter-pre-commit-hooks/ci.yaml?label=ci)](https://github.com/trallnag/filter-pre-commit-hooks/actions/workflows/ci.yaml)
 [![release](https://img.shields.io/github/actions/workflow/status/trallnag/filter-pre-commit-hooks/release.yaml?label=release)](https://github.com/trallnag/filter-pre-commit-hooks/actions/workflows/release.yaml)
 
