@@ -56,6 +56,9 @@ build-backend = "hatchling.build"
 
 package = true
 
+# TODO: Change this to 21 days during the next maintenance.
+exclude-newer = "7 days"
+
 [tool.ruff]
 
 cache-dir = ".cache/ruff"
